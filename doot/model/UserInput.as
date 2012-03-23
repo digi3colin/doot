@@ -1,7 +1,6 @@
 ﻿package doot.model {
 	import com.fastframework.core.FASTEventDispatcher;
 	import com.fastframework.core.IFASTEventDispatcher;
-	import com.fastframework.core.SingletonError;
 
 	import flash.display.InteractiveObject;
 	import flash.display.Stage;
@@ -31,7 +30,7 @@
 		public var isMouseDown:Boolean=false;
 
 		public function UserInput() {
-			if(ins!=null){throw new SingletonError(this);}
+			if(ins!=null){return;}
 			ins = this;
 			listeners = new Dictionary(true);
 			mousePt = new Point();
@@ -86,7 +85,7 @@
 			this.target = e.target;
 			dispatchEvent(e);
 		}
-		
+
 		private var isEnable:Boolean = true;
 		public function enable():void{
 			isEnable = true;
