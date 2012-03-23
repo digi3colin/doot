@@ -52,7 +52,7 @@
 
 			var bboxPoints:Array = SpriteSelected.instance().selectedSprite().getBoundPoints();
 
-			g.beginFill(1,0.8);
+			g.beginFill(1,0.08);
 
 			g.moveTo(Point(bboxPoints[0]).x, Point(bboxPoints[0]).y);
 			for(var i:int=1;i<bboxPoints.length;i++){
