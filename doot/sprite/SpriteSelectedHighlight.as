@@ -1,7 +1,5 @@
 ﻿package doot.sprite {
-	import com.fastframework.core.SingletonError;
-	import com.moet.birthday.card.DrawContexts;
-
+	import flash.display.DisplayObjectContainer;
 	import flash.display.Graphics;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -10,37 +8,40 @@
 	 * @author Digi3Studio - Colin Leung
 	 */
 	public class SpriteSelectedHighlight {
-		private static var ins : SpriteSelectedHighlight;
-		public static function instance():SpriteSelectedHighlight {
-			return ins || new SpriteSelectedHighlight();
-		}
+		private var selectedSprite:SpriteSelectable;
+		private var highlighter:Sprite;
 
 		public function SpriteSelectedHighlight(){
-			if(ins!=null){throw new SingletonError(this);}ins = this;
-			
-			SpriteSelected.instance().addEventListener(Event.SELECT, onSpriteSelect,false,999,true);
+			SpriteSelected.instance().addEventListener(SpriteSelected.SELECT, onSpriteSelect,false,-900,true);
+			SpriteSelected.instance().when(SpriteSelected.DESELECT, this, onDeselect);
+
 			highlighter = new Sprite();
 			highlighter.mouseEnabled = false;
 		}
 
-		private var selectedSprite:SpriteSelectable;
-		private var highlighter:Sprite;
-
-		private function onSpriteSelect(...e):void{
+		private function onSpriteSelect(e:Event):void{
+			if(this.highlighter.parent!=null)this.highlighter.parent.removeChild(this.highlighter);
 			if(this.selectedSprite!=null)selectedSprite.removeEventListener(Event.CHANGE, updateBoundBox);
-			//nothing selected, clear the highlighter;
-			if(SpriteSelected.instance().selectedSprite()==null){
-				highlighter.graphics.clear();
-				return;
-			}
-
 
 			this.selectedSprite = SpriteSelected.instance().selectedSprite();
+			var spriteParent:DisplayObjectContainer = this.selectedSprite.parent;
+			//the selected Sprite not on stage.. it's not visible, do nothing.
+			if(spriteParent==null)return;
+
+			//move the bounding box under the selected sprite;
+			var selectedSpriteDepth:int = spriteParent.getChildIndex(selectedSprite);
+			spriteParent.addChildAt(this.highlighter,selectedSpriteDepth);
+
 			this.selectedSprite.when(Event.CHANGE, this, updateBoundBox);
 
 			updateBoundBox();
-			//move the bounding box under the selected sprite;
-			DrawContexts.instance().addAsset(this.highlighter);
+		}
+
+		private function onDeselect(e:Event):void{
+			if(this.highlighter.parent!=null)this.highlighter.parent.removeChild(this.highlighter);
+			if(this.selectedSprite!=null)selectedSprite.removeEventListener(Event.CHANGE, updateBoundBox);
+			this.selectedSprite = null;
+			this.highlighter.graphics.clear();
 		}
 
 		private function updateBoundBox(...e):void{
@@ -51,7 +52,7 @@
 
 			var bboxPoints:Array = SpriteSelected.instance().selectedSprite().getBoundPoints();
 
-			g.beginFill(1,0.05);
+			g.beginFill(1,0.8);
 
 			g.moveTo(Point(bboxPoints[0]).x, Point(bboxPoints[0]).y);
 			for(var i:int=1;i<bboxPoints.length;i++){

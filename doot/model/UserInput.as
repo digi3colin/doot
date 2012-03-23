@@ -8,32 +8,28 @@
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
-	import flash.utils.Dictionary;
 	/**
 	 * @author Digi3Studio - Colin Leung
 	 */
 	public class UserInput extends FASTEventDispatcher implements IFASTEventDispatcher{
+		public static const MOUSE_DOWN:String = MouseEvent.MOUSE_DOWN;
+		public static const MOUSE_MOVE:String = MouseEvent.MOUSE_MOVE;
+		public static const MOUSE_UP:String = MouseEvent.MOUSE_UP;
+		public static const KEY_DOWN:String = KeyboardEvent.KEY_DOWN;
+		public static const KEY_UP:String = KeyboardEvent.KEY_UP;
+
+		public var target:Object;
+		public var mousePt:Point = new Point();
+		public var isMouseDown:Boolean=false;
+
+		private var stage:Stage;
 		private static var ins:UserInput;
 		public static function instance():UserInput {
 			return ins || new UserInput();
 		}
 
-		private var stage:Stage;
-		private var listeners:Dictionary;
-//		private var EVENT_MOUSE_DOWN:String 	= "EVENT_MOUSE_DOWN";
-//		private var EVENT_MOUSE_MOVE:String 	= "EVENT_MOUSE_MOVE";
-//		private var EVENT_MOUSE_UP:String	 	= "EVENT_MOUSE_UP";
-
-		public var target:Object;
-		public var mousePt:Point;
-
-		public var isMouseDown:Boolean=false;
-
 		public function UserInput() {
-			if(ins!=null){return;}
-			ins = this;
-			listeners = new Dictionary(true);
-			mousePt = new Point();
+			if(ins!=null){return;}ins = this;
 		}
 
 		public function setRoot(mc:InteractiveObject):UserInput{
@@ -93,6 +89,10 @@
 
 		public function disable():void{
 			isEnable = false;
+		}
+		
+		public function getObjectsUnderPoint():Array{
+			return this.stage.getObjectsUnderPoint(mousePt);
 		}
 	}
 }
