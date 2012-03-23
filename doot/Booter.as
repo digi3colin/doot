@@ -1,5 +1,4 @@
 ﻿package doot {
-	import com.fastframework.core.SingletonError;
 	import com.fastframework.core.utils.SystemUtils;
 	import com.fastframework.net.ILoader;
 	import com.fastframework.net.LoaderLoader;
@@ -23,13 +22,11 @@
 	final public class Booter{
 		private static var ins:Booter;
 		public static function instance():Booter {
-			ins ||=new Booter();
-			return ins;
+			return ins || new Booter();
 		}
 
 		public function Booter() {
-			if(ins!=null){throw new SingletonError(this);}
-			ins = this;
+			if(ins!=null){return;}ins = this;
 		}
 		
 		private var mainView:Sprite;
@@ -39,6 +36,7 @@
 		public function getLoaderInfo():LoaderInfo{
 			return loaderInfo;
 		};
+
 		public function initWithView(mc:Sprite):void{
 /*			this.graphics.beginFill(0x9D7341);
 			this.graphics.drawRect(0, 0, 1000, 650);*/
@@ -69,6 +67,7 @@
 			parameters['lang']		= loaderInfo.parameters['lang']     ||'en';
 			parameters['city']		= loaderInfo.parameters['city']     ||'asia';
 
+			//pass all flashvas to file to load
 			var strParameters:Array = [];
 			for(var name:String in parameters){
 				if(parameters[name]=='')continue;
@@ -77,7 +76,7 @@
 
 			var queryKey:String = (strParameters.length==0)?'':((fileToLoad.match(/\?/)==null)?'?':'&');
 
-			loader.when(Event.COMPLETE, this, onMainLoad);
+			loader.once(Event.COMPLETE, this, onMainLoad);
 			loader.load(ResolveLink.instance().create(fileToLoad+queryKey+strParameters.join('&'),true));
 		}
 
@@ -86,29 +85,24 @@
 		};
 
 		private function loading(e:ProgressEvent):void{
-			var fileSize:Number = Math.ceil(loader.getBytesTotal()/1024);
-			progressBar.setProgress(loader.getBytesLoaded()/loader.getBytesTotal(),'Loading '+fileSize+'kB file: ');
+			progressBar.setProgress(loader.getBytesLoaded()/loader.getBytesTotal());
 		}
 	}
 }
 import flash.display.Sprite;
-import flash.text.TextField;
 
 final class ProgressBar {
 	private var view:Sprite;
 	private var bar:Sprite;
-	private var txt:TextField;
+
 	private var isShow:Boolean =false;
 
-	
 	public function ProgressBar(view:Sprite){
 		this.view = view;
-		txt = view['txt'];
 		bar = view['bar'];
 	}
 	
-	public function setProgress(progress:Number,msg:String=""):void{
-		txt.text = msg+Math.floor(progress*100)+"%";
+	public function setProgress(progress:Number):void{
 		bar.scaleX = progress;
 
 		if(progress>=1 || progress<=0){
