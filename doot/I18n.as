@@ -1,0 +1,1 @@
+﻿package doot {	/**	 * @author colin	 */	public interface I18n {		function t(key:String):String;	}}
