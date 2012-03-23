@@ -1,5 +1,6 @@
 ﻿package doot.sprite {
 	import com.fastframework.core.SingletonError;
+	import com.moet.birthday.card.DrawContexts;
 
 	import flash.display.Graphics;
 	import flash.display.Sprite;
