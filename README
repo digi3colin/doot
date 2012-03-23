@@ -1,0 +1,8 @@
+Digi3 Flash Booter follows our kohana file structure.
+for example, it load files from 
+/media/site/swf/files.swf
+/media/site/xml/data.xml
+/media/site/images/img.jpg
+/media/site/css/style.css
+
+the lose coupled and system independent codes will migrate to FAST-Framework

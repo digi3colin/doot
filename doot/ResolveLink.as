@@ -59,7 +59,7 @@
 						case "jpeg":
 						case "gif":
 						case "png":
-							specifyFolder = "../img/";
+							specifyFolder = "../images/";
 							noCache="";
 							break;
 						case "flv":

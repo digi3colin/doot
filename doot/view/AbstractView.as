@@ -6,7 +6,6 @@
 	import flash.display.Sprite;
 	import flash.utils.describeType;
 
-
 	/**
 	 * @author colin
 	 */

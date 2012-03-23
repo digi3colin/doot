@@ -1,4 +1,8 @@
 ﻿package doot.model {
+	import doot.ResolveLink;
+	import doot.model.encoder.PNGEncoder;
+	import doot.ui.Prompt;
+
 	import com.fastframework.core.FASTLog;
 	import com.fastframework.core.ILog;
 	import com.fastframework.net.ILoader;
@@ -6,9 +10,7 @@
 	import com.fastframework.utils.AS2;
 	import com.fastframework.view.ButtonClip;
 	import com.fastframework.view.events.ButtonClipEvent;
-	import doot.ResolveLink;
-	import doot.model.encoder.PNGEncoder;
-	import doot.ui.Prompt;
+
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.events.Event;

@@ -3,6 +3,7 @@
 	import com.fastframework.core.Queue;
 	import com.fastframework.net.ILoader;
 	import com.fastframework.utils.AS2;
+
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
@@ -119,10 +120,12 @@
 		}
 	}
 }
-import com.fastframework.core.ICommand;
-import com.fastframework.net.ILoader;
 import doot.IProgressBar;
 import doot.ProgressLoader;
+
+import com.fastframework.core.ICommand;
+import com.fastframework.net.ILoader;
+
 import flash.display.DisplayObject;
 import flash.display.DisplayObjectContainer;
 import flash.net.URLVariables;

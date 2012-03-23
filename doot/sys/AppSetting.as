@@ -31,7 +31,6 @@
 		private var _lang:String = 'en';
 		private var _city:String = 'asia';
 
-
 		private var ldrSession:ILoader;
 		public function setSession(str:String):void{
 			if(_session!=''&&str==''){
