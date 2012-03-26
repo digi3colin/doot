@@ -52,7 +52,8 @@
 
 		private function onNavChange(e:NavigationEvent):void{
 			//if targetName is empty, load only 
-			var navTargetIsEmpty:Boolean = (e.targetContainer=="");
+			var navTargetIsEmpty:Boolean = (e.targetContainer==""||e.targetContainer==null);
+
 	 		var criteria1:Boolean = (targetName==""&&navTargetIsEmpty);
 	 		var criteria2:Boolean = (navTargetIsEmpty==false&&e.targetContainer==targetName);
 			if(criteria1==false&&criteria2==false)return;
@@ -61,6 +62,7 @@
 			if(fadein.isTweening()==true)fadein.killTween();
 			if(fadeout.isTweening()==true)return;
 			fadeout.startTween();
+			trace('onNavChange');
 		}
 
 		private function onFadeOutAndLoad(e:MotionTweenEvent):void {
@@ -89,6 +91,7 @@
 			if(Navigation.instance().getNavStackRequests()!=null){
 				Navigation.instance().nextSection();
 			}
+			
 			movieContainer.alpha=0.01;
 			fadein.startTween();
 		}
