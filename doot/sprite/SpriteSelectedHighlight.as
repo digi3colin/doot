@@ -13,7 +13,7 @@
 
 		public function SpriteSelectedHighlight(){
 			SpriteSelected.instance().addEventListener(SpriteSelected.SELECT, onSpriteSelect,false,-900,true);
-			SpriteSelected.instance().when(SpriteSelected.DESELECT, this, onDeselect);
+			SpriteSelected.instance().when(SpriteSelected.DESELECT, onDeselect);
 
 			highlighter = new Sprite();
 			highlighter.mouseEnabled = false;
@@ -25,14 +25,12 @@
 
 			this.selectedSprite = SpriteSelected.instance().selectedSprite();
 			var spriteParent:DisplayObjectContainer = this.selectedSprite.parent;
-			//the selected Sprite not on stage.. it's not visible, do nothing.
-			if(spriteParent==null)return;
 
 			//move the bounding box under the selected sprite;
 			var selectedSpriteDepth:int = spriteParent.getChildIndex(selectedSprite);
 			spriteParent.addChildAt(this.highlighter,selectedSpriteDepth);
 
-			this.selectedSprite.when(Event.CHANGE, this, updateBoundBox);
+			this.selectedSprite.when(Event.CHANGE, updateBoundBox);
 
 			updateBoundBox();
 		}

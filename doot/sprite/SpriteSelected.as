@@ -7,6 +7,7 @@
 	 * @author Digi3Studio - Colin Leung
 	 */
 	public class SpriteSelected extends FASTEventDispatcher implements IFASTEventDispatcher{
+		private var _selectedSprite:SpriteSelectable;
 		private static var ins : SpriteSelected;
 		public static const SELECT : String = Event.SELECT;
 		public static const DESELECT:String = 'deselect';
@@ -19,19 +20,18 @@
 			if(ins!=null){return;}ins = this;
 		}
 
-		private var _selectedSprite:SpriteSelectable;
 		public function select(mc:SpriteSelectable):void{
-			this._selectedSprite = mc;
+			_selectedSprite = mc;
 			dispatchEvent(new Event(SpriteSelected.SELECT));
 		}
 
 		public function deselect():void{
-			this._selectedSprite = null;
+			_selectedSprite = null;
 			dispatchEvent(new Event(SpriteSelected.DESELECT));
 		}
 
 		public function selectedSprite() : SpriteSelectable {
-			return this._selectedSprite;
+			return _selectedSprite;
 		}
 	}
 }

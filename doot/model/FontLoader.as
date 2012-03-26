@@ -61,8 +61,8 @@
 			dict[handler] = true;
 
 			var ldFont:ILoader = LoaderFactory.instance().getSWFLoader(mcFont);
-			ldFont.once(LoaderEvent.READY,this,function(e:Event):void{onFontLoaded(fontName);});
-			ldFont.when(LoaderEvent.PROGRESS,this,onProgress);
+			ldFont.once(LoaderEvent.READY, function(e:Event):void{onFontLoaded(fontName);});
+			ldFont.when(LoaderEvent.PROGRESS, onProgress);
 			ldFont.load(ResolveLink.instance().create(fontName+'.swf'));
 
 			return fontName;			

@@ -41,7 +41,7 @@
 				if(ldrSession!=null)return;
 
 				ldrSession = LoaderFactory.instance().getXMLLoader();
-				ldrSession.when(Event.COMPLETE,this,session2);
+				ldrSession.when(Event.COMPLETE,session2);
 				ldrSession.load(ResolveLink.instance().create('users/getSessionId.xml',true));
 
 			}

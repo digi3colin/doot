@@ -1,7 +1,6 @@
 ﻿package doot.sprite {
 	import doot.model.UserInput;
 
-	import com.fastframework.core.EventDispatcherUtils;
 	import com.fastframework.core.IFASTEventDispatcher;
 
 	import flash.display.Sprite;
@@ -28,16 +27,20 @@
 			this.r = 0;
 			this.s = 1;
 
-			this.when(MouseEvent.MOUSE_OVER, this, over);
+			this.when(MouseEvent.MOUSE_OVER, over);
 		}
 
-		public function when(eventType : String, whichObject : Object, callFunction : Function) : * {
-			EventDispatcherUtils.instance().when(this, eventType, whichObject, callFunction);
+		public function when(eventType : String, callback : Function) : * {
+			this.addEventListener(eventType, callback,false,0,true);
 			return this;
 		}
 
-		public function once(eventType : String, whichObject : Object, callback : Function) : * {
-			EventDispatcherUtils.instance().once(this, eventType, whichObject, callback);
+		public function once(eventType : String, callback : Function) : * {
+			var f:Function = function(e:Event):void{
+				callback(e);
+				removeEventListener(eventType, f);
+			};
+			this.addEventListener(eventType, f);
 			return this;
 		}
 

@@ -32,9 +32,9 @@
 		public function setView(mc : Sprite, autoHide : Boolean = true) : IView {
 			base.setView(mc,autoHide);
 			btn_cancel 	= new ButtonClip(mc['btn_cancel']);
-			btn_cancel.when(MouseEvent.CLICK, this, onCancel);
+			btn_cancel.when(MouseEvent.CLICK, onCancel);
 			btn_ok 		= new ButtonClip(mc['btn_ok']);
-			btn_ok.when(MouseEvent.CLICK, this, onOk);
+			btn_ok.when(MouseEvent.CLICK, onOk);
 			body 		= mc['body'];
 			title 		= mc['title'];
 			

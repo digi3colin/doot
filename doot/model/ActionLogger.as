@@ -36,10 +36,10 @@
 			base = FASTLog.instance();
 
 			ldSaveScreenCaptureImage = LoaderFactory.instance().getXMLLoader();
-			ldSaveScreenCaptureImage.when(Event.COMPLETE, this, onScreenCaptureUpload);
+			ldSaveScreenCaptureImage.when(Event.COMPLETE, onScreenCaptureUpload);
 
 			ldSaveMessage = LoaderFactory.instance().getXMLLoader();
-			ldSaveMessage.when(Event.COMPLETE,this,onBugSubmitted);
+			ldSaveMessage.when(Event.COMPLETE, onBugSubmitted);
 		}
 
 		private var txt:TextField;
@@ -110,7 +110,7 @@
 
 		public function setButton(mc : Sprite) : void {
 			btn = new ButtonClip(mc);
-			btn.when(ButtonClipEvent.CLICK,this,submit);
+			btn.when(ButtonClipEvent.CLICK,	submit);
 		}
 
 		public function setLogger(logger : ILog) : void {

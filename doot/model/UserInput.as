@@ -12,15 +12,18 @@
 	 * @author Digi3Studio - Colin Leung
 	 */
 	public class UserInput extends FASTEventDispatcher implements IFASTEventDispatcher{
+		public static const CLICK:String = MouseEvent.CLICK;
 		public static const MOUSE_DOWN:String = MouseEvent.MOUSE_DOWN;
 		public static const MOUSE_MOVE:String = MouseEvent.MOUSE_MOVE;
 		public static const MOUSE_UP:String = MouseEvent.MOUSE_UP;
 		public static const KEY_DOWN:String = KeyboardEvent.KEY_DOWN;
 		public static const KEY_UP:String = KeyboardEvent.KEY_UP;
 
+
 		public var target:Object;
 		public var mousePt:Point = new Point();
 		public var isMouseDown:Boolean=false;
+		private var isEnable:Boolean = true;
 
 		private var stage:Stage;
 		private static var ins:UserInput;
@@ -34,7 +37,7 @@
 
 		public function setRoot(mc:InteractiveObject):UserInput{
 			if(mc.stage ==null){
-				mc.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage, false, 0, true);
+				mc.addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 				return this;
 			}
 			registerRoot(mc.stage);
@@ -42,7 +45,7 @@
 		};
 
 		private function onAddedToStage(e:Event):void{
-			InteractiveObject(e.target).removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage, false);
+			InteractiveObject(e.target).removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			registerRoot(InteractiveObject(e.target).stage);
 		}
 		
@@ -50,12 +53,13 @@
 			if(this.stage!=null)return;
 			this.stage = stage;
 
-			stage.addEventListener(MouseEvent.MOUSE_DOWN, this.down, false, 0, true);
-			stage.addEventListener(MouseEvent.MOUSE_MOVE, this.forwardMouseEvent, false, 0, true);
-			stage.addEventListener(MouseEvent.MOUSE_UP,   this.up, false, 0, true);
+			stage.addEventListener(MouseEvent.MOUSE_DOWN, this.down);
+			stage.addEventListener(MouseEvent.MOUSE_MOVE, this.forwardMouseEvent);
+			stage.addEventListener(MouseEvent.MOUSE_UP,   this.up);
+			stage.addEventListener(MouseEvent.CLICK,   	  this.up);
 
-			stage.addEventListener(KeyboardEvent.KEY_DOWN, this.forwardKeyboardEvent, false, 0, true);
-			stage.addEventListener(KeyboardEvent.KEY_UP,   this.forwardKeyboardEvent, false, 0, true);
+			stage.addEventListener(KeyboardEvent.KEY_DOWN, this.forwardKeyboardEvent);
+			stage.addEventListener(KeyboardEvent.KEY_UP,   this.forwardKeyboardEvent);
 		}
 
 		private function down(e:MouseEvent):void{
@@ -82,7 +86,6 @@
 			dispatchEvent(e);
 		}
 
-		private var isEnable:Boolean = true;
 		public function enable():void{
 			isEnable = true;
 		}

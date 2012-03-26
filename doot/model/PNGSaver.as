@@ -27,7 +27,7 @@
 			PNGSaver.ins = this;
 
 			uploader = LoaderFactory.instance().getXMLLoader();
-			uploader.when(LoaderEvent.READY, this, uploaded);
+			uploader.when(LoaderEvent.READY, uploaded);
 		}
 
 		public function save(width:int,height:int,imagesToDraw:Array):void{

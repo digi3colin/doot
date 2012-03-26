@@ -43,15 +43,15 @@
 			queue = Queue.instance(queueThreadId);
 
 			this.loader = loader;
-			this.loader.when(Event.COMPLETE, 				this, forwardEvent);
-			this.loader.when(IOErrorEvent.IO_ERROR, 		this, forwardEvent);
-			this.loader.when(HTTPStatusEvent.HTTP_STATUS, 	this, forwardEvent);
-			this.loader.when(Event.OPEN, 					this, forwardEvent);
-			this.loader.when(ProgressEvent.PROGRESS, 		this, forwardEvent);
-			this.loader.when(Event.UNLOAD, 					this, forwardEvent);
+			this.loader.when(Event.COMPLETE, 				forwardEvent);
+			this.loader.when(IOErrorEvent.IO_ERROR, 		forwardEvent);
+			this.loader.when(HTTPStatusEvent.HTTP_STATUS, 	forwardEvent);
+			this.loader.when(Event.OPEN, 					forwardEvent);
+			this.loader.when(ProgressEvent.PROGRESS, 		forwardEvent);
+			this.loader.when(Event.UNLOAD, 					forwardEvent);
 
-			this.loader.when(IOErrorEvent.IO_ERROR,			this,onError);
-			this.loader.when(Event.COMPLETE,				this,onLoadComplete);
+			this.loader.when(IOErrorEvent.IO_ERROR,			onError);
+			this.loader.when(Event.COMPLETE,				onLoadComplete);
 		}
 
 		public function getContext():*{

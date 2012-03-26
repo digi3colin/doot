@@ -45,9 +45,9 @@
 
 			fadein  = new MotionTween(movieContainer,{a:100});
 			fadeout = new MotionTween(movieContainer,{a:0});
-			fadeout.when(MotionTweenEvent.END, this, onFadeOutAndLoad);
+			fadeout.when(MotionTweenEvent.END, onFadeOutAndLoad);
 
-			Navigation.instance().when(NavigationEvent.CHANGE, this, onNavChange);
+			Navigation.instance().when(NavigationEvent.CHANGE, onNavChange);
 		}
 
 		private function onNavChange(e:NavigationEvent):void{
@@ -76,8 +76,8 @@
 			var url:String = prefix+currentNavKey+"."+extension;
 
 			var ldr:ILoader = LoaderFactory.instance().getSWFLoader(movieContainer);
-			ldr.when(LoaderEvent.PROGRESS, this, onProgress);
-			ldr.once(LoaderEvent.READY, this,onLoadContentAndFadeIn);
+			ldr.when(LoaderEvent.PROGRESS, 	onProgress);
+			ldr.once(LoaderEvent.READY, 	onLoadContentAndFadeIn);
 			ldr.load(ResolveLink.instance().create(url));
 		}
 

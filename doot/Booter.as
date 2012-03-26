@@ -54,7 +54,7 @@
 			loader = new LoaderLoader();
 			if(mc['mc_progress_bar']!=null){
 				progressBar = new ProgressBar(mc['mc_progress_bar']);
-				loader.when(ProgressEvent.PROGRESS, this,loading);
+				loader.when(ProgressEvent.PROGRESS, loading);
 			}
 
 			var fileToLoad:String= loaderInfo.parameters['file']||"main.swf";
@@ -74,7 +74,7 @@
 
 			var queryKey:String = (strParameters.length==0)?'':((fileToLoad.match(/\?/)==null)?'?':'&');
 
-			loader.once(Event.COMPLETE, this, onMainLoad);
+			loader.once(Event.COMPLETE, onMainLoad);
 			loader.load(ResolveLink.instance().create(fileToLoad+queryKey+strParameters.join('&'),true));
 		}
 
