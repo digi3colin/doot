@@ -19,11 +19,12 @@
 		public static const KEY_DOWN:String = KeyboardEvent.KEY_DOWN;
 		public static const KEY_UP:String = KeyboardEvent.KEY_UP;
 
-
 		public var target:Object;
 		public var mousePt:Point = new Point();
 		public var isMouseDown:Boolean=false;
 		private var isEnable:Boolean = true;
+
+		private var dictEventToListen:Object;
 
 		private var stage:Stage;
 		private static var ins:UserInput;
@@ -33,6 +34,34 @@
 
 		public function UserInput() {
 			if(ins!=null){return;}ins = this;
+			dictEventToListen = {};
+		}
+
+		public override function addEventListener(type : String, listener : Function, useCapture : Boolean = false, priority : int = 0, useWeakReference : Boolean = false):void{
+			super.addEventListener(type, listener, useCapture, priority, useWeakReference);
+			//lazy loading... only listen required event type.
+			if(dictEventToListen[type]==true)return;
+			dictEventToListen[type] = true;
+			switch(type){
+				case UserInput.MOUSE_DOWN:
+					stage.addEventListener(MouseEvent.MOUSE_DOWN, this.down);
+					break;
+				case UserInput.MOUSE_MOVE:
+					stage.addEventListener(MouseEvent.MOUSE_MOVE, this.move);
+					break;
+				case UserInput.MOUSE_UP:
+					stage.addEventListener(MouseEvent.MOUSE_UP,   this.up);
+					break;
+				case UserInput.CLICK:
+					stage.addEventListener(MouseEvent.CLICK,   	  this.up);
+					break;
+				case UserInput.KEY_DOWN:
+					stage.addEventListener(KeyboardEvent.KEY_DOWN, this.forwardKeyboardEvent);
+					break;
+				case UserInput.KEY_UP:
+					stage.addEventListener(KeyboardEvent.KEY_UP,   this.forwardKeyboardEvent);
+					break;
+			}
 		}
 
 		public function setRoot(mc:InteractiveObject):UserInput{
@@ -52,14 +81,6 @@
 		private function registerRoot(stage:Stage):void{
 			if(this.stage!=null)return;
 			this.stage = stage;
-
-			stage.addEventListener(MouseEvent.MOUSE_DOWN, this.down);
-			stage.addEventListener(MouseEvent.MOUSE_MOVE, this.forwardMouseEvent);
-			stage.addEventListener(MouseEvent.MOUSE_UP,   this.up);
-			stage.addEventListener(MouseEvent.CLICK,   	  this.up);
-
-			stage.addEventListener(KeyboardEvent.KEY_DOWN, this.forwardKeyboardEvent);
-			stage.addEventListener(KeyboardEvent.KEY_UP,   this.forwardKeyboardEvent);
 		}
 
 		private function down(e:MouseEvent):void{
@@ -69,6 +90,10 @@
 		private function up(e:MouseEvent):void{
 			isMouseDown = false;
 			forwardMouseEvent(e);
+		}
+		
+		private function move(e:MouseEvent):void{
+			if(this.hasEventListener(MouseEvent.MOUSE_MOVE))forwardMouseEvent(e);
 		}
 
 		private function forwardMouseEvent(e:MouseEvent):void{

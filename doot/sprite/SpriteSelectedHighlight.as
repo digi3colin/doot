@@ -21,7 +21,9 @@
 
 		private function onSpriteSelect(e:Event):void{
 			if(this.highlighter.parent!=null)this.highlighter.parent.removeChild(this.highlighter);
-			if(this.selectedSprite!=null)selectedSprite.removeEventListener(Event.CHANGE, updateBoundBox);
+			if(this.selectedSprite!=null){
+				selectedSprite.removeEventListener(Event.CHANGE, updateBoundBox);
+			}
 
 			this.selectedSprite = SpriteSelected.instance().selectedSprite();
 			var spriteParent:DisplayObjectContainer = this.selectedSprite.parent;
@@ -30,7 +32,7 @@
 			var selectedSpriteDepth:int = spriteParent.getChildIndex(selectedSprite);
 			spriteParent.addChildAt(this.highlighter,selectedSpriteDepth);
 
-			this.selectedSprite.when(Event.CHANGE, updateBoundBox);
+			this.selectedSprite.addEventListener(Event.CHANGE, updateBoundBox);
 
 			updateBoundBox();
 		}

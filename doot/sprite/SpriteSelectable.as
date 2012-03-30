@@ -1,4 +1,5 @@
 ﻿package doot.sprite {
+	import com.fastframework.core.EventDispatcherUtils;
 	import doot.model.UserInput;
 
 	import com.fastframework.core.IFASTEventDispatcher;
@@ -31,16 +32,12 @@
 		}
 
 		public function when(eventType : String, callback : Function) : * {
-			this.addEventListener(eventType, callback,false,0,true);
+			this.addEventListener(eventType, callback, false,0,true);
 			return this;
 		}
 
 		public function once(eventType : String, callback : Function) : * {
-			var f:Function = function(e:Event):void{
-				callback(e);
-				removeEventListener(eventType, f);
-			};
-			this.addEventListener(eventType, f);
+			EventDispatcherUtils.instance().once(this, eventType, callback);
 			return this;
 		}
 
@@ -103,7 +100,6 @@
 		public function translate(tx:Number,ty:Number):void{
 			if(ox==0){
 				mtx.translate(tx, ty);
-
 				this.transform.matrix = mtx;
 			}else{
 				this.x = x+tx;
