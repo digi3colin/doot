@@ -24,44 +24,26 @@
 		public var isMouseDown:Boolean=false;
 		private var isEnable:Boolean = true;
 
-		private var dictEventToListen:Object;
-
 		private var stage:Stage;
-		private static var ins:UserInput;
+		private static var ins : UserInput;
+		private var listenMove : Boolean;
 		public static function instance():UserInput {
 			return ins || new UserInput();
 		}
 
 		public function UserInput() {
-			if(ins!=null){return;}ins = this;
-			dictEventToListen = {};
+			if(ins!=null){return;}
+			ins = this;
 		}
 
 		public override function addEventListener(type : String, listener : Function, useCapture : Boolean = false, priority : int = 0, useWeakReference : Boolean = false):void{
-			super.addEventListener(type, listener, useCapture, priority, useWeakReference);
-			//lazy loading... only listen required event type.
-			if(dictEventToListen[type]==true)return;
-			dictEventToListen[type] = true;
-			switch(type){
-				case UserInput.MOUSE_DOWN:
-					stage.addEventListener(MouseEvent.MOUSE_DOWN, this.down);
-					break;
-				case UserInput.MOUSE_MOVE:
-					stage.addEventListener(MouseEvent.MOUSE_MOVE, this.move);
-					break;
-				case UserInput.MOUSE_UP:
-					stage.addEventListener(MouseEvent.MOUSE_UP,   this.up);
-					break;
-				case UserInput.CLICK:
-					stage.addEventListener(MouseEvent.CLICK,   	  this.up);
-					break;
-				case UserInput.KEY_DOWN:
-					stage.addEventListener(KeyboardEvent.KEY_DOWN, this.forwardKeyboardEvent);
-					break;
-				case UserInput.KEY_UP:
-					stage.addEventListener(KeyboardEvent.KEY_UP,   this.forwardKeyboardEvent);
-					break;
+			//mouse move is demanding... only add on require..
+			if(listenMove!=true && type==MouseEvent.MOUSE_MOVE){
+				stage.addEventListener(MouseEvent.MOUSE_MOVE, this.move);
+				listenMove == true;
 			}
+
+			super.addEventListener(type, listener, useCapture, priority, useWeakReference);
 		}
 
 		public function setRoot(mc:InteractiveObject):UserInput{
@@ -81,6 +63,12 @@
 		private function registerRoot(stage:Stage):void{
 			if(this.stage!=null)return;
 			this.stage = stage;
+
+			stage.addEventListener(KeyboardEvent.KEY_UP,   this.forwardKeyboardEvent,false,9999);
+			stage.addEventListener(KeyboardEvent.KEY_DOWN, this.forwardKeyboardEvent,false,9999);
+			stage.addEventListener(MouseEvent.CLICK,   	   this.up,false,9999);
+			stage.addEventListener(MouseEvent.MOUSE_UP,    this.up,false,9999);
+			stage.addEventListener(MouseEvent.MOUSE_DOWN,  this.down,false,9999);
 		}
 
 		private function down(e:MouseEvent):void{
@@ -98,10 +86,10 @@
 
 		private function forwardMouseEvent(e:MouseEvent):void{
 			if(isEnable==false)return;
-			
-			this.target = e.target;
+			trace('input forward',e.stageX,e.stageY);
 			this.mousePt.x = e.stageX;
 			this.mousePt.y = e.stageY;
+			this.target = e.target;
 			dispatchEvent(new MouseEvent(e.type,e.bubbles,e.cancelable,e.stageX,e.stageY,e.relatedObject,e.ctrlKey,e.altKey,e.shiftKey,e.buttonDown,e.delta));
 		}
 

@@ -42,7 +42,9 @@
 		}
 
 		private function over(e:MouseEvent):void{
-			if(UserInput.instance().isMouseDown)return;
+			//user doing something.. dont focus it.
+			if(UserInput.instance().isMouseDown==true)return;
+
 			SpriteSelected.instance().select(this);
 		}
 
@@ -102,8 +104,9 @@
 				mtx.translate(tx, ty);
 				this.transform.matrix = mtx;
 			}else{
-				this.x = x+tx;
-				this.y = y+ty;
+				trace('sprite selectable translate',tx,ty);
+				this.x +=tx;
+				this.y +=ty;
 			}
 			dispatchEvent(new Event(Event.CHANGE));
 		}

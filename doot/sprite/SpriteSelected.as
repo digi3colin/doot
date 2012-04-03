@@ -12,7 +12,7 @@
 		private var _selectedSprite:SpriteSelectable;
 		private var preSelectSprite:SpriteSelectable;
 		private var selectTimer:Timer;
-		private var delay:int = 100;
+		private var delay:int = 250;
 
 		private static var ins : SpriteSelected;
 		public static const SELECT : String = Event.SELECT;
@@ -36,6 +36,9 @@
 		}
 
 		private function doSelect(e:TimerEvent):void{
+			//the sprite already selected.. do nothing.
+			if(_selectedSprite==preSelectSprite)return;
+
 			_selectedSprite = preSelectSprite;
 			dispatchEvent(new Event(SpriteSelected.SELECT));		
 		}
