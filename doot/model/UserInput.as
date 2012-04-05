@@ -86,7 +86,6 @@
 
 		private function forwardMouseEvent(e:MouseEvent):void{
 			if(isEnable==false)return;
-			trace('input forward',e.stageX,e.stageY);
 			this.mousePt.x = e.stageX;
 			this.mousePt.y = e.stageY;
 			this.target = e.target;

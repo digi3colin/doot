@@ -79,7 +79,7 @@
 		}
 		
 		private function doSubmit():void{
-			btn.setEnabled(false);
+			mcBtn.visible = false;
 
 			var data:ByteArray = PNGEncoder.encode(screencap);
 			ldSaveScreenCaptureImage.sendBinaryAndLoad(ResolveLink.instance().create('bugs/saveScreenshot'), data);		
@@ -108,8 +108,9 @@
 			AS2.instance().getURL("./");
 		}
 
+		private var mcBtn:Sprite;
 		public function setButton(mc : Sprite) : void {
-			btn = new ButtonClip(mc);
+			btn = new ButtonClip(mcBtn = mc);
 			btn.when(ButtonClipEvent.CLICK,	submit);
 		}
 

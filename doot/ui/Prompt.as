@@ -14,27 +14,30 @@
 	public class Prompt implements IView{
 		private static var ins:Prompt;
 		public static function instance():Prompt {
-			ins ||=new Prompt(new SingletonBlocker());
-			return ins;
+			return ins ||new Prompt();
 		}
 		
-		public function Prompt(p_key:SingletonBlocker) {
+		public function Prompt() {
+			if(ins!=null)return;
+			ins = this;
 			base = new AbstractView();
-			p_key;
 		}
 		
 		private var base:AbstractView;
 		private var body:TextField;
 		private var title:TextField;
-		private var btn_cancel:ButtonClip;
-		private var btn_ok:ButtonClip;
+		private var btnCancel:ButtonClip;
+		private var btnOk:ButtonClip;
+		private var btn_cancel:Sprite;
+		private var btn_ok:Sprite;
+		
 
 		public function setView(mc : Sprite, autoHide : Boolean = true) : IView {
 			base.setView(mc,autoHide);
-			btn_cancel 	= new ButtonClip(mc['btn_cancel']);
-			btn_cancel.when(MouseEvent.CLICK, onCancel);
-			btn_ok 		= new ButtonClip(mc['btn_ok']);
-			btn_ok.when(MouseEvent.CLICK, onOk);
+			btnCancel 	= new ButtonClip(btn_cancel = mc['btn_cancel']);
+			btnCancel.when(MouseEvent.CLICK, onCancel);
+			btnOk 		= new ButtonClip(btn_ok = mc['btn_ok']);
+			btnOk.when(MouseEvent.CLICK, onOk);
 			body 		= mc['body'];
 			title 		= mc['title'];
 			
@@ -70,8 +73,8 @@
 			this.title.text = title;
 			this.body.text = body;
 
-			this.btn_cancel.setEnabled((cancelCallBack!=null));
-			this.btn_ok.setEnabled((okCallBack!=null)||okAndHide==true);
+			this.btn_cancel.visible = (cancelCallBack!=null);
+			this.btn_ok.visible = (okCallBack!=null)||okAndHide==true;
 
 			this.cancelCallBack = cancelCallBack;
 			this.okCallBack = okCallBack;
@@ -81,15 +84,15 @@
 
 		private function onCancel(e:MouseEvent):void{
 			if(this.cancelCallBack!=null)cancelCallBack();
-			btn_cancel.setEnabled(false);
-			btn_ok.setEnabled(false);
+			btn_cancel.visible = false;
+			btn_ok.visible = false;
 			hide();
 		}
 
 		private function onOk(e:MouseEvent):void{
 			if(this.okCallBack!=null)okCallBack();
-			btn_cancel.setEnabled(false);
-			btn_ok.setEnabled(false);
+			btn_cancel.visible = false;
+			btn_ok.visible = false;
 			if(okAndHide == true)hide();
 		}
 
@@ -98,5 +101,3 @@
 		}
 	}
 }
-
-class SingletonBlocker{}

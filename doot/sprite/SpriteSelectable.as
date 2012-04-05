@@ -1,7 +1,7 @@
 ﻿package doot.sprite {
-	import com.fastframework.core.EventDispatcherUtils;
 	import doot.model.UserInput;
 
+	import com.fastframework.core.EventDispatcherUtils;
 	import com.fastframework.core.IFASTEventDispatcher;
 
 	import flash.display.Sprite;
@@ -14,7 +14,9 @@
 	/**
 	 * @author Digi3Studio - Colin Leung
 	 */
-	public class SpriteSelectable extends Sprite implements IFASTEventDispatcher{
+	public class SpriteSelectable extends Sprite implements IFASTEventDispatcher {
+		public static const EVENT_CHANGE : String = Event.CHANGE;
+
 		private var mtx:Matrix;
 		private var ox:Number;
 		private var oy:Number;
@@ -92,7 +94,7 @@
 				this.scaleY = s;
 			}
 			this.s = s;
-			dispatchEvent(new Event(Event.CHANGE));
+			dispatchEvent(new Event(SpriteSelectable.EVENT_CHANGE));
 		}
 
 		public function getScale():Number{
@@ -104,7 +106,6 @@
 				mtx.translate(tx, ty);
 				this.transform.matrix = mtx;
 			}else{
-				trace('sprite selectable translate',tx,ty);
 				this.x +=tx;
 				this.y +=ty;
 			}
