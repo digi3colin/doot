@@ -1,5 +1,6 @@
 ﻿package doot.model {
 	import com.fastframework.core.FASTEventDispatcher;
+	import com.fastframework.core.FASTMouse;
 	import com.fastframework.core.IFASTEventDispatcher;
 
 	import flash.display.InteractiveObject;
@@ -20,7 +21,6 @@
 		public static const KEY_UP:String = KeyboardEvent.KEY_UP;
 
 		public var target:Object;
-		public var mousePt:Point = new Point();
 		public var isMouseDown:Boolean=false;
 		private var isEnable:Boolean = true;
 
@@ -86,8 +86,8 @@
 
 		private function forwardMouseEvent(e:MouseEvent):void{
 			if(isEnable==false)return;
-			this.mousePt.x = e.stageX;
-			this.mousePt.y = e.stageY;
+			FASTMouse.x = e.stageX;
+			FASTMouse.y = e.stageY;
 			this.target = e.target;
 			dispatchEvent(new MouseEvent(e.type,e.bubbles,e.cancelable,e.stageX,e.stageY,e.relatedObject,e.ctrlKey,e.altKey,e.shiftKey,e.buttonDown,e.delta));
 		}
@@ -107,7 +107,7 @@
 		}
 		
 		public function getObjectsUnderPoint():Array{
-			return this.stage.getObjectsUnderPoint(mousePt);
+			return this.stage.getObjectsUnderPoint(new Point(FASTMouse.x,FASTMouse.y));
 		}
 	}
 }
