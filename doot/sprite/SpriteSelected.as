@@ -1,5 +1,8 @@
 ﻿package doot.sprite {
+	import doot.model.UserInput;
+
 	import com.fastframework.core.FASTEventDispatcher;
+	import com.fastframework.core.FASTMouse;
 	import com.fastframework.core.IFASTEventDispatcher;
 
 	import flash.events.Event;
@@ -38,6 +41,9 @@
 		private function doSelect(e:TimerEvent):void{
 			//the sprite already selected.. do nothing.
 			if(_selectedSprite==preSelectSprite)return;
+			//check user still over the sprite;
+			UserInput.instance().updateMouse();
+			if(preSelectSprite.hitTestPoint(FASTMouse.x, FASTMouse.y, true)==false)return;
 
 			_selectedSprite = preSelectSprite;
 			dispatchEvent(new Event(SpriteSelected.SELECT));		

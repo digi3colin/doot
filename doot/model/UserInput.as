@@ -89,7 +89,7 @@
 			FASTMouse.x = e.stageX;
 			FASTMouse.y = e.stageY;
 			this.target = e.target;
-			dispatchEvent(new MouseEvent(e.type,e.bubbles,e.cancelable,e.stageX,e.stageY,e.relatedObject,e.ctrlKey,e.altKey,e.shiftKey,e.buttonDown,e.delta));
+			dispatchEvent(e);
 		}
 
 		private function forwardKeyboardEvent(e:KeyboardEvent):void{
@@ -105,9 +105,14 @@
 		public function disable():void{
 			isEnable = false;
 		}
+
+		public function updateMouse():void{
+			FASTMouse.x = stage.mouseX;
+			FASTMouse.y = stage.mouseY;
+		}
 		
 		public function getObjectsUnderPoint():Array{
-			return this.stage.getObjectsUnderPoint(new Point(FASTMouse.x,FASTMouse.y));
+			return this.stage.getObjectsUnderPoint(new Point(stage.mouseX,stage.mouseY));
 		}
 	}
 }

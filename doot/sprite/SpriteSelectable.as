@@ -65,9 +65,11 @@
 		}
 
 		public function remove():Boolean{
+			if(SpriteSelected.instance().selectedSprite()===this){
+				SpriteSelected.instance().deselect();
+			}
 			if(this.parent==null)return false;
 			this.parent.removeChild(this);
-			dispatchEvent(new Event(Event.CHANGE));
 			return true;
 		}
 

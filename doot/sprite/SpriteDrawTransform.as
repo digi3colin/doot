@@ -47,6 +47,8 @@
 			mtx.translate(center.x, center.y);
 
 			mc.transform.matrix = mtx;
+
+			this.s = s;
 		}
 
 		public function getScale() : Number {
