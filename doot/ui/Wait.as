@@ -2,8 +2,12 @@
 	import doot.IView;
 	import doot.view.AbstractView;
 
+	import com.fastframework.core.FASTLog;
+
 	import flash.display.Sprite;
+	import flash.text.AntiAliasType;
 	import flash.text.TextField;
+	import flash.text.TextFormat;
 
 	/**
 	 * @author digi3colin
@@ -11,31 +15,37 @@
 	public class Wait implements IView{
 		private static var ins:Wait;
 		public static function instance():Wait {
-			ins ||=new Wait(new SingletonBlocker());
-			return ins;
+			return ins ||new Wait();
 		}
 		private var msg:String="";
 		private var base:AbstractView;
 		private var body:TextField;
 		private var showCount:int=0;
 
-		public function Wait(p_key:SingletonBlocker) {
+		public function Wait() {
+			if(ins!=null)return;
+			ins = this;
 			base = new AbstractView();
-			p_key;
 		}
 
 		public function message(str:String):void{
 			msg = str;
 			if(base.getView()==null){
-				trace('[Wait message]'+str);
+				FASTLog.instance().log('[Wait message]'+str,FASTLog.LOG_LEVEL_DETAIL);
 				return;
 			}
 			this.body.text = str;
+			this.show();
 		}
 
 		public function setView(mc:Sprite,autoHide:Boolean=true):IView{
 			base.setView(mc,autoHide);
-			body = mc['body'];
+
+			this.body = mc['txt_body'];
+			this.body.defaultTextFormat = new TextFormat('FontBody');
+			this.body.thickness = 0;
+			this.body.sharpness = 0;
+			this.body.antiAliasType = AntiAliasType.ADVANCED;
 			return this;
 		}
 
@@ -44,7 +54,6 @@
 		}
 
 		public function hide() : IView{
-			trace('wait.hide()');
 			showCount--;
 			if(showCount<=0){
 				base.hide();
@@ -54,7 +63,6 @@
 
 		public function show() : IView {
 			showCount++;
-			trace('wait.show()' + msg);
 			base.show();
 			return this;
 		}
