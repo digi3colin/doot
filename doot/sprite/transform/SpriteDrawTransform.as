@@ -1,4 +1,4 @@
-﻿package doot.sprite {
+﻿package doot.sprite.transform {
 	import flash.display.Sprite;
 	import flash.geom.Matrix;
 	import flash.geom.Point;

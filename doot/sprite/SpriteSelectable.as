@@ -1,14 +1,17 @@
 ﻿package doot.sprite {
-	import doot.model.UserInput;
-
 	import com.fastframework.core.EventDispatcherUtils;
 	import com.fastframework.core.IFASTEventDispatcher;
-
+	import doot.model.UserInput;
+	import doot.sprite.transform.ITransformBehaviour;
+	import doot.sprite.transform.SpriteDrawTransform;
+	import doot.sprite.transform.SpriteTransform;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+
+
 
 	/**
 	 * @author Digi3Studio - Colin Leung
