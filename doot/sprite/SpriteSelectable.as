@@ -1,10 +1,12 @@
 ﻿package doot.sprite {
-	import com.fastframework.core.EventDispatcherUtils;
-	import com.fastframework.core.IFASTEventDispatcher;
 	import doot.model.UserInput;
 	import doot.sprite.transform.ITransformBehaviour;
 	import doot.sprite.transform.SpriteDrawTransform;
 	import doot.sprite.transform.SpriteTransform;
+
+	import com.fastframework.core.EventDispatcherUtils;
+	import com.fastframework.core.IFASTEventDispatcher;
+
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
