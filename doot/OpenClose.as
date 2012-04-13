@@ -1,11 +1,10 @@
-﻿package {
-	import flash.events.TimerEvent;
-	import doot.IOpenClose;
-
+﻿package doot{
 	import com.fastframework.core.FASTEventDispatcher;
-
 	import flash.events.Event;
+	import flash.events.TimerEvent;
 	import flash.utils.Timer;
+
+
 
 	/**
 	 * @author Digi3Studio - Colin Leung

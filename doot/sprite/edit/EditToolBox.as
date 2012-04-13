@@ -4,7 +4,6 @@
 	import doot.sprite.SpriteSelected;
 
 	import com.fastframework.core.FASTMouse;
-	import com.fastframework.core.SingletonError;
 
 	import flash.display.Sprite;
 
@@ -12,21 +11,11 @@
 	 * @author Digi3Studio - Colin Leung
 	 */
 	public class EditToolBox{
-		private static var ins : EditToolBox;
-		public static function instance():EditToolBox {
-			return ins || new EditToolBox();
-		}
-		
-		public function EditToolBox(){
-			if(ins!=null){throw new SingletonError(this);}
-			ins = this;
-		}
-
 		private var mcTrashBin:Sprite;
 		private var mc:Sprite;
 		private var editToolController:EditToolController;
 
-		public function setView(mc:Sprite):void{
+		public function EditToolBox(mc:Sprite):void{
 			this.mc = mc;
 
 			mcTrashBin = mc['mc_trash_bin'];

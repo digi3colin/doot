@@ -13,8 +13,6 @@
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 
-
-
 	/**
 	 * @author Digi3Studio - Colin Leung
 	 */
