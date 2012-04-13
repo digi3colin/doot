@@ -47,8 +47,8 @@
 
 			btnScale 	= new EditButton(new ButtonClip(view.btn_scale),new EditScale());
 
-			model.when(SpriteSelected.SELECT, spriteSelected);
-			model.when(SpriteSelected.DESELECT, onDeselect);
+			model.when(SpriteSelected.EVENT_SELECT, spriteSelected);
+			model.when(SpriteSelected.EVENT_DESELECT, onDeselect);
 
 			timerShowAll = new Timer(delayShowAll,1);
 			timerShowAll.addEventListener(TimerEvent.TIMER, showAllTool, false, 0, true);

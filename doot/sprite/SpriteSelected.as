@@ -18,8 +18,8 @@
 		private var delay:int = 250;
 
 		private static var ins : SpriteSelected;
-		public static const SELECT : String = Event.SELECT;
-		public static const DESELECT:String = 'deselect';
+		public static const EVENT_SELECT : String = Event.SELECT;
+		public static const EVENT_DESELECT:String = 'deselect';
 
 		public static function instance():SpriteSelected {
 			return ins || new SpriteSelected();
@@ -46,7 +46,7 @@
 			if(preSelectSprite.hitTestPoint(FASTMouse.x, FASTMouse.y, true)==false)return;
 
 			_selectedSprite = preSelectSprite;
-			dispatchEvent(new Event(SpriteSelected.SELECT));		
+			dispatchEvent(new Event(SpriteSelected.EVENT_SELECT));		
 		}
 
 		public function deselect():void{
@@ -54,7 +54,7 @@
 
 			_selectedSprite = null;
 			preSelectSprite = null;
-			dispatchEvent(new Event(SpriteSelected.DESELECT));
+			dispatchEvent(new Event(SpriteSelected.EVENT_DESELECT));
 		}
 
 		public function selectedSprite() : SpriteSelectable {
