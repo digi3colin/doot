@@ -9,7 +9,6 @@
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 
-
 	/**
 	 * @author Digi3Studio - Colin Leung
 	 */

@@ -3,8 +3,6 @@
 	import doot.sprite.edit.IEditToolBehaviour;
 	import flash.display.Sprite;
 
-
-
 	/**
 	 * @author Digi3Studio - Colin Leung
 	 */
