@@ -20,7 +20,6 @@
 		public function Prompt() {
 			if(ins!=null)return;
 			ins = this;
-			base = new AbstractView();
 		}
 		
 		private var base:AbstractView;
@@ -33,7 +32,8 @@
 		
 
 		public function setView(mc : Sprite, autoHide : Boolean = true) : IView {
-			base.setView(mc,autoHide);
+			base = base|| new AbstractView(mc, autoHide);
+
 			btnCancel 	= new ButtonClip(btn_cancel = mc['btn_cancel']);
 			btnCancel.when(MouseEvent.CLICK, onCancel);
 			btnOk 		= new ButtonClip(btn_ok = mc['btn_ok']);

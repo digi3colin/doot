@@ -19,6 +19,7 @@
 	public class SpriteSelectable extends Sprite implements IFASTEventDispatcher, ITransformBehaviour {
 		public static const EVENT_CHANGE : String = Event.CHANGE;
 		private var imp:ITransformBehaviour;
+		public var disableToolOption:int=0;
 
 		public function SpriteSelectable(x:Number,y:Number) {
 			this.x = x;
@@ -26,6 +27,13 @@
 			imp = (x==0)?new SpriteDrawTransform(this):new SpriteTransform(this);
 
 			this.when(MouseEvent.MOUSE_OVER, over);
+		}
+
+		private function over(e:MouseEvent):void{
+			//user doing something.. dont focus it.
+			if(UserInput.instance().isMouseDown==true)return;
+			//ready to select this sprite;
+			SpriteSelected.instance().select(this);
 		}
 
 		public function when(eventType : String, callback : Function) : * {
@@ -36,13 +44,6 @@
 		public function once(eventType : String, callback : Function) : * {
 			EventDispatcherUtils.instance().once(this, eventType, callback);
 			return this;
-		}
-
-		private function over(e:MouseEvent):void{
-			//user doing something.. dont focus it.
-			if(UserInput.instance().isMouseDown==true)return;
-			//ready to select this sprite;
-			SpriteSelected.instance().select(this);
 		}
 
 		public function rotate(radian:Number):void{
@@ -89,6 +90,10 @@
 		public function getGlobalCenter() : Point {
 			var bbox:Rectangle = this.getBounds(this);
 			return this.localToGlobal(new Point(bbox.x+bbox.width*0.5,bbox.y+bbox.height*0.5));
+		}
+		
+		public function getAllowOption():int{
+			return disableToolOption;
 		}
 	}
 }

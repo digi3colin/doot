@@ -25,7 +25,7 @@
 		public function Wait() {
 			if(ins!=null)return;
 			ins = this;
-			base = new AbstractView();
+
 		}
 
 		public function message(str:String):void{
@@ -39,7 +39,7 @@
 		}
 
 		public function setView(mc:Sprite,autoHide:Boolean=true):IView{
-			base.setView(mc,autoHide);
+			base = base|| new AbstractView(mc, autoHide);
 
 			this.body = mc['txt_body'];
 			this.body.defaultTextFormat = new TextFormat('FontBody');

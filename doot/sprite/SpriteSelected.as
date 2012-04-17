@@ -6,6 +6,7 @@
 	import com.fastframework.core.IFASTEventDispatcher;
 
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	/**
@@ -15,7 +16,9 @@
 		private var _selectedSprite:SpriteSelectable;
 		private var preSelectSprite:SpriteSelectable;
 		private var selectTimer:Timer;
-		private var delay:int = 250;
+		private var selectDelay:int = 250;
+		private var deselectTimer:Timer;
+		private var deselectDelay:int = 800;
 
 		private static var ins : SpriteSelected;
 		public static const EVENT_SELECT : String = Event.SELECT;
@@ -27,8 +30,10 @@
 
 		public function SpriteSelected(){
 			if(ins!=null){return;}ins = this;
-			selectTimer = new Timer(delay,1);
+			selectTimer = new Timer(selectDelay,1);
 			selectTimer.addEventListener(TimerEvent.TIMER, doSelect,false, 0, true);
+			deselectTimer = new Timer(deselectDelay,1);
+			deselectTimer.addEventListener(TimerEvent.TIMER, doDeselect,false, 0, true);
 		}
 
 		public function select(mc:SpriteSelectable):void{
@@ -46,15 +51,29 @@
 			if(preSelectSprite.hitTestPoint(FASTMouse.x, FASTMouse.y, true)==false)return;
 
 			_selectedSprite = preSelectSprite;
-			dispatchEvent(new Event(SpriteSelected.EVENT_SELECT));		
+			_selectedSprite.addEventListener(MouseEvent.MOUSE_OUT, selectedSpriteOut);
+			dispatchEvent(new Event(SpriteSelected.EVENT_SELECT));
+		}
+
+		private function selectedSpriteOut(e:MouseEvent):void{
+			//wait a few second.. deselect;
+			deselectTimer.reset();
+			deselectTimer.start();
+		}
+
+		private function doDeselect(e:TimerEvent):void{
+			deselect();
 		}
 
 		public function deselect():void{
-			selectTimer.reset();
+			selectTimer.stop();
+			dispatchEvent(new Event(SpriteSelected.EVENT_DESELECT));
 
+			if(_selectedSprite==null)return;
+
+			_selectedSprite.removeEventListener(MouseEvent.MOUSE_OUT, selectedSpriteOut);
 			_selectedSprite = null;
 			preSelectSprite = null;
-			dispatchEvent(new Event(SpriteSelected.EVENT_DESELECT));
 		}
 
 		public function selectedSprite() : SpriteSelectable {

@@ -15,9 +15,6 @@
 	import flash.utils.Timer;
 
 
-
-
-
 	/**
 	 * @author Digi3Studio - Colin Leung
 	 */
