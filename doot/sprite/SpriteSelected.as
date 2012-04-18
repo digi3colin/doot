@@ -17,8 +17,8 @@
 		private var preSelectSprite:SpriteSelectable;
 		private var selectTimer:Timer;
 		private var selectDelay:int = 250;
-		private var deselectTimer:Timer;
-		private var deselectDelay:int = 800;
+//		private var deselectTimer:Timer;
+//		private var deselectDelay:int = 800;
 
 		private static var ins : SpriteSelected;
 		public static const EVENT_SELECT : String = Event.SELECT;
@@ -32,8 +32,8 @@
 			if(ins!=null){return;}ins = this;
 			selectTimer = new Timer(selectDelay,1);
 			selectTimer.addEventListener(TimerEvent.TIMER, doSelect,false, 0, true);
-			deselectTimer = new Timer(deselectDelay,1);
-			deselectTimer.addEventListener(TimerEvent.TIMER, doDeselect,false, 0, true);
+//			deselectTimer = new Timer(deselectDelay,1);
+//			deselectTimer.addEventListener(TimerEvent.TIMER, doDeselect,false, 0, true);
 		}
 
 		public function select(mc:SpriteSelectable):void{
@@ -57,13 +57,13 @@
 
 		private function selectedSpriteOut(e:MouseEvent):void{
 			//wait a few second.. deselect;
-			deselectTimer.reset();
-			deselectTimer.start();
+//			deselectTimer.reset();
+//			deselectTimer.start();
 		}
 
-		private function doDeselect(e:TimerEvent):void{
-			deselect();
-		}
+//		private function doDeselect(e:TimerEvent):void{
+//			deselect();
+//		}
 
 		public function deselect():void{
 			selectTimer.stop();

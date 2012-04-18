@@ -24,6 +24,7 @@
 		}
 
 		private function onStartDrag(e:Event):void{
+			input.updateMouse();
 			imp.reset();
 
 			input.addEventListener(MouseEvent.MOUSE_MOVE, onDragging);
