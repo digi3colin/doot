@@ -18,7 +18,7 @@
 	/**
 	 * @author Digi3Studio - Colin Leung
 	 */
-	public class EditToolController extends FASTEventDispatcher{
+	public class ControllerEditTool extends FASTEventDispatcher{
 		public static const EVENT_MOVE_END:String = 'move_end';
 
 		//manage show hide of the Edit tool
@@ -32,7 +32,7 @@
 		private var btnRotate:EditButton;
 		private var btnMove:EditButton;
 		private var btnScale:EditButton;
-		public function EditToolController(model:SpriteSelected,view:EditTool) {
+		public function ControllerEditTool(model:SpriteSelected,view:EditTool) {
 			this.view = view;
 			this.model = model;
 
@@ -59,7 +59,7 @@
 
 		private function onMoveEnd(...e):void{
 			unwatchTarget();
-			dispatchEvent(new Event(EditToolController.EVENT_MOVE_END));
+			dispatchEvent(new Event(ControllerEditTool.EVENT_MOVE_END));
 		}
 
 		private function watchTarget():void{

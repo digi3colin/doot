@@ -11,33 +11,17 @@
 	import flash.events.ProgressEvent;
 
 	/**
-	 * @author colin
-	 */
-/**
-* The wrapper for main.swf to display the loading progress as soon as possible
-*/
+	 * The wrapper for main.swf to display the loading progress as soon as possible
+	*/
 
 	final public class Booter{
-		private static var ins:Booter;
-		public static function instance():Booter {
-			return ins || new Booter();
-		}
-
-		public function Booter() {
-			if(ins!=null){return;}ins = this;
-		}
-		
 		private var mainView:Sprite;
 		private var loader:ILoader;
 		private var progressBar:ProgressBar;
 		private var loaderInfo:LoaderInfo;
-		public function getLoaderInfo():LoaderInfo{
-			return loaderInfo;
-		};
 
-		public function initWithView(mc:Sprite):void{
-/*			this.graphics.beginFill(0x9D7341);
-			this.graphics.drawRect(0, 0, 1000, 650);*/
+		public function Booter(mc:Sprite) {
+			Template.bg = mc['mc_bg'];
 
 			loaderInfo = mc.loaderInfo;
 
@@ -80,7 +64,7 @@
 
 		private function onMainLoad(e:Event):void{
 			mainView.addChild(loader.getContext());
-		};
+		}
 
 		private function loading(e:ProgressEvent):void{
 			progressBar.setProgress(loader.getBytesLoaded()/loader.getBytesTotal());

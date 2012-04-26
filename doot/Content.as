@@ -62,7 +62,6 @@
 			if(fadein.isTweening()==true)fadein.killTween();
 			if(fadeout.isTweening()==true)return;
 			fadeout.startTween();
-			trace('onNavChange');
 		}
 
 		private function onFadeOutAndLoad(e:MotionTweenEvent):void {
