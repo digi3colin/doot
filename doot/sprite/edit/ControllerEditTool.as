@@ -1,119 +1,81 @@
-﻿package doot.sprite.edit{
+﻿package doot.sprite.edit {
 	import asset.EditTool;
-	import com.fastframework.core.FASTEventDispatcher;
-	import com.fastframework.view.ButtonClip;
-	import doot.sprite.SpriteSelectable;
-	import doot.sprite.SpriteSelected;
+
 	import doot.sprite.edit.editBehaviour.EditMove;
 	import doot.sprite.edit.editBehaviour.EditRotate;
 	import doot.sprite.edit.editBehaviour.EditScale;
+
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.events.MouseEvent;
-	import flash.events.TimerEvent;
 	import flash.geom.Point;
-	import flash.utils.Timer;
 
 
 	/**
 	 * @author Digi3Studio - Colin Leung
 	 */
-	public class ControllerEditTool extends FASTEventDispatcher{
-		public static const EVENT_MOVE_END:String = 'move_end';
-
+	public class ControllerEditTool{
 		//manage show hide of the Edit tool
-		private var delayShowAll:Number = 500;
-		private var timerShowAll:Timer;
-		
-		private var model:SpriteSelected;
-		private var targetSprite:SpriteSelectable;
 		private var view:EditTool;
 
-		private var btnRotate:EditButton;
-		private var btnMove:EditButton;
-		private var btnScale:EditButton;
-		public function ControllerEditTool(model:SpriteSelected,view:EditTool) {
-			this.view = view;
-			this.model = model;
+		private var btnRotate:ControllerEditButton;
+		private var btnMove:ControllerEditButton;
+		private var btnScale : ControllerEditButton;
+		private var editor : Editor;
 
-			btnRotate 	= new EditButton(new ButtonClip(view.btn_rotate),new EditRotate());
+		public function ControllerEditTool(mc:Sprite,editor:Editor) {
+			this.editor = editor;
+			this.editor.when(Editor.EVENT_HIDE_ALL_TOOL, 	hide);
+			this.editor.when(Editor.EVENT_SHOW_BASIC_TOOL, 	showMoveTool);
+			this.editor.when(Editor.EVENT_SHOW_ALL_TOOL,   	showAllTool);
+			this.editor.when(Editor.EVENT_EDIT, 			updateButtonsPosition);
 
-			btnMove 	= new EditButton(new ButtonClip(view.btn_move),new EditMove());
-			btnMove.when(MouseEvent.MOUSE_DOWN, onMoveStart);
-			btnMove.when(MouseEvent.MOUSE_UP, onMoveEnd);
+			this.view = new EditTool();
+			view.btn_move     = mc['btn_move'];
+			view.btn_rotate   = mc['btn_rotate'];
+			view.btn_scale    = mc['btn_scale'];
 
-			btnScale 	= new EditButton(new ButtonClip(view.btn_scale),new EditScale());
-
-			model.when(SpriteSelected.EVENT_SELECT, spriteSelected);
-			model.when(SpriteSelected.EVENT_DESELECT, onDeselect);
-
-			timerShowAll = new Timer(delayShowAll,1);
-			timerShowAll.addEventListener(TimerEvent.TIMER, showAllTool, false, 0, true);
-
-			hide();
+			//add new edit features.
+			btnRotate 	= new ControllerEditButton(view.btn_rotate,new EditRotate(),editor);
+			btnMove 	= new ControllerEditButton(view.btn_move,  new EditMove()  ,editor);
+			btnScale 	= new ControllerEditButton(view.btn_scale, new EditScale() ,editor);
+			
+			doHide();
 		}
 
-		private function onMoveStart(...e):void{
-			watchTarget();
+		private function hide(e:Event):void{
+			doHide();
 		}
 
-		private function onMoveEnd(...e):void{
-			unwatchTarget();
-			dispatchEvent(new Event(ControllerEditTool.EVENT_MOVE_END));
-		}
-
-		private function watchTarget():void{
-			targetSprite.addEventListener(SpriteSelectable.EVENT_CHANGE, updateButtonsPosition);		
-		}
-		
-		private function unwatchTarget():void{
-			if(targetSprite==null)return;
-			targetSprite.removeEventListener(SpriteSelectable.EVENT_CHANGE, updateButtonsPosition);		
-		}
-
-		private function onDeselect(...e):void{
-			unwatchTarget();
-			targetSprite = null;
-			hide();
-		}
-
-		private function spriteSelected(...e) : void {
-			onMoveEnd();
-			targetSprite = model.selectedSprite();
-
-			hide();
-			showMoveTool();
-			updateButtonsPosition();
-
-			timerShowAll.start();
-		}
-
-		public function hide(...e):void{
-			timerShowAll.reset();
+		private function doHide():void{
 			this.view.btn_move.visible = false;
 			this.view.btn_rotate.visible = false;
-			this.view.btn_scale.visible = false;
+			this.view.btn_scale.visible = false;		
 		}
 
-		private function showMoveTool(...e):void{
+		private function showMoveTool(e:Event):void{
+			doUpdateButtonsPosition();
 			this.view.btn_move.visible = true;
 		}
 		
-		private function showAllTool(...e):void{
+		private function showAllTool(e:Event):void{
+			doUpdateButtonsPosition();
 			this.view.btn_move.visible = true;
 			this.view.btn_rotate.visible = true;
 			this.view.btn_scale.visible = true;
 		}
 
-		private function updateButtonsPosition(...e):void{
-//			var pos:Point = SpriteSelectable.selected.getCornerTopRight();
-			var center:Point = targetSprite.getGlobalCenter();
+		private function updateButtonsPosition(e:Event):void{
+			doUpdateButtonsPosition();
+		}
+
+		private function doUpdateButtonsPosition():void{
+			var center:Point = editor.getTargetSprite().getGlobalCenter();
 
 			pos(this.view.btn_move,  center.x,   center.y);
 			pos(this.view.btn_rotate,center.x-20,center.y);
-			pos(this.view.btn_scale, center.x+20,center.y);
+			pos(this.view.btn_scale, center.x+20,center.y);		
 		}
-		
+
 		private function pos(mc:Sprite,x:Number,y:Number):void{
 			mc.x = x;
 			mc.y = y;

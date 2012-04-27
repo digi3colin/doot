@@ -1,6 +1,6 @@
 ﻿package doot.ui {
 	import doot.IView;
-	import doot.view.AbstractView;
+	import doot.view.ShowHideView;
 
 	import com.fastframework.core.FASTLog;
 
@@ -18,7 +18,7 @@
 			return ins ||new Wait();
 		}
 		private var msg:String="";
-		private var base:AbstractView;
+		private var base:ShowHideView;
 		private var body:TextField;
 		private var showCount:int=0;
 
@@ -39,7 +39,7 @@
 		}
 
 		public function setView(mc:Sprite,autoHide:Boolean=true):IView{
-			base = base|| new AbstractView(mc, autoHide);
+			base = base|| new ShowHideView(mc, autoHide);
 
 			this.body = mc['txt_body'];
 			this.body.defaultTextFormat = new TextFormat('FontBody');

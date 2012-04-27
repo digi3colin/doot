@@ -12,13 +12,13 @@
 	/**
 	 * @author colin
 	 */
-	public class AbstractView implements IView{
+	public class ShowHideView implements IView{
 		private var isHide:Boolean=false;
 		private var motion:MotionTween;
 		private var view:Sprite;
 		private var btnClose:ButtonClip;
 
-		public function AbstractView(mc:Sprite,autoHide:Boolean = true){
+		public function ShowHideView(mc:Sprite,autoHide:Boolean = true){
 			this.setView(mc, autoHide);
 			if(mc['btn_close']!=null){
 				btnClose = new ButtonClip(mc['btn_close']);

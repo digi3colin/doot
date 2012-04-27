@@ -3,43 +3,45 @@
 
 	import com.fastframework.core.FASTEventDispatcher;
 	import com.fastframework.core.IFASTEventDispatcher;
+	import com.fastframework.view.ButtonClip;
 	import com.fastframework.view.IButtonClip;
 	import com.fastframework.view.events.ButtonClipEvent;
 
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 
 	/**
 	 * @author Digi3Studio - Colin Leung
 	 */
-	public class EditButton extends FASTEventDispatcher implements IFASTEventDispatcher{
+	public class ControllerEditButton extends FASTEventDispatcher implements IFASTEventDispatcher{
 		private var input:UserInput=UserInput.instance();
 
 		private var base : IButtonClip;
 		private var imp:IEditToolBehaviour;
+		private var editor:Editor;
 
-		public function EditButton(btn:IButtonClip, imp:IEditToolBehaviour){
+		public function ControllerEditButton(mc:Sprite, imp:IEditToolBehaviour,editor:Editor){
+			base = new ButtonClip(mc).when(ButtonClipEvent.MOUSE_DOWN, onStartDrag);
 			this.imp = imp;
-			base = btn.when(ButtonClipEvent.MOUSE_DOWN, onStartDrag);
+			this.editor = editor;
 		}
 
 		private function onStartDrag(e:Event):void{
 			input.updateMouse();
 			imp.reset();
-
+			editor.editStart();
+			
 			input.addEventListener(MouseEvent.MOUSE_MOVE, onDragging);
 			input.addEventListener(MouseEvent.MOUSE_UP, onStopDrag);
-
-			dispatchEvent(new Event(MouseEvent.MOUSE_DOWN));
 		}
 
 		private function onStopDrag(e:Event):void{
 			imp.click();
+			editor.editEnd();
+
 			input.removeEventListener(MouseEvent.MOUSE_MOVE, onDragging);
 			input.removeEventListener(MouseEvent.MOUSE_UP, onStopDrag);
-
-			dispatchEvent(new Event(MouseEvent.MOUSE_UP));
-			dispatchEvent(new Event(MouseEvent.CLICK));
 		}
 
 		private function onDragging(e:MouseEvent):void{

@@ -1,6 +1,6 @@
 ﻿package doot.ui {
 	import doot.IView;
-	import doot.view.AbstractView;
+	import doot.view.ShowHideView;
 
 	import com.fastframework.view.ButtonClip;
 
@@ -22,7 +22,7 @@
 			ins = this;
 		}
 		
-		private var base:AbstractView;
+		private var base:ShowHideView;
 		private var body:TextField;
 		private var title:TextField;
 		private var btnCancel:ButtonClip;
@@ -32,7 +32,7 @@
 		
 
 		public function setView(mc : Sprite, autoHide : Boolean = true) : IView {
-			base = base|| new AbstractView(mc, autoHide);
+			base = base|| new ShowHideView(mc, autoHide);
 
 			btnCancel 	= new ButtonClip(btn_cancel = mc['btn_cancel']);
 			btnCancel.when(MouseEvent.CLICK, onCancel);
