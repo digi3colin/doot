@@ -1,9 +1,10 @@
 ﻿package  doot{
+	import com.fastframework.core.IFASTEventDispatcher;
 	import flash.display.Sprite;
 	/**
 	 * @author colin
 	 */
-	public interface IView{
+	public interface IView extends IFASTEventDispatcher{
 		function hide():IView;
 		function show():IView;
 		function getViewName() : String;

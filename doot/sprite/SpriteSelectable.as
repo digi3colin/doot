@@ -26,10 +26,10 @@
 			this.y = y;
 			imp = (x==0)?new SpriteDrawTransform(this):new SpriteTransform(this);
 
-			this.when(MouseEvent.MOUSE_OVER, over);
+			this.when(MouseEvent.MOUSE_OVER, select);
 		}
 
-		private function over(e:MouseEvent):void{
+		private function select(e:MouseEvent):void{
 			//user doing something.. dont focus it.
 			if(UserInput.instance().isMouseDown==true)return;
 			//ready to select this sprite;

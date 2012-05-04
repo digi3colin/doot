@@ -2,16 +2,18 @@
 	import doot.IView;
 	import doot.view.ShowHideView;
 
+	import com.fastframework.core.FASTEventDispatcher;
 	import com.fastframework.view.ButtonClip;
 
 	import flash.display.Sprite;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.text.TextField;
 
 	/**
 	 * @author colin
 	 */
-	public class Prompt implements IView{
+	public class Prompt extends FASTEventDispatcher implements IView{
 		private static var ins:Prompt;
 		public static function instance():Prompt {
 			return ins ||new Prompt();
@@ -64,7 +66,7 @@
 		private var okCallBack:Function;
 		private var okAndHide:Boolean = true;
 		public function popup(title:String,body:String,cancelCallBack:Function=null,okCallBack:Function=null,okAndHide:Boolean = true):void{
-			if(base.getView()==null){
+			if(base==null){
 				trace(title,body);
 				if(okCallBack!=null)okCallBack();
 				return;
@@ -82,14 +84,14 @@
 			show();
 		}
 
-		private function onCancel(e:MouseEvent):void{
+		private function onCancel(e:Event):void{
 			if(this.cancelCallBack!=null)cancelCallBack();
 			btn_cancel.visible = false;
 			btn_ok.visible = false;
 			hide();
 		}
 
-		private function onOk(e:MouseEvent):void{
+		private function onOk(e:Event):void{
 			if(this.okCallBack!=null)okCallBack();
 			btn_cancel.visible = false;
 			btn_ok.visible = false;

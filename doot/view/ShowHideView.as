@@ -1,6 +1,7 @@
 ﻿package doot.view {
 	import doot.IView;
 
+	import com.fastframework.core.FASTEventDispatcher;
 	import com.fastframework.motion.MotionTween;
 	import com.fastframework.view.ButtonClip;
 	import com.fastframework.view.events.ButtonClipEvent;
@@ -12,7 +13,7 @@
 	/**
 	 * @author colin
 	 */
-	public class ShowHideView implements IView{
+	public class ShowHideView extends FASTEventDispatcher implements IView{
 		private var isHide:Boolean=false;
 		private var motion:MotionTween;
 		private var view:Sprite;
@@ -49,6 +50,7 @@
 			if(motion==null || isHide==true)return this;
 			isHide = true;
 			motion.startTween({a:0,x:view.x,y:view.y});
+			dispatchEvent(new Event(ShowHideEvent.EVENT_HIDE));
 			return this;
 		}
 		
@@ -56,6 +58,7 @@
 			if(motion==null || isHide==false)return this;
 			isHide = false;
 			motion.startTween({a:100,x:view.x,y:view.y});
+			dispatchEvent(new Event(ShowHideEvent.EVENT_SHOW));
 			return this;
 		}
 		

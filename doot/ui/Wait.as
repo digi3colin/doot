@@ -1,4 +1,5 @@
 ﻿package doot.ui {
+	import com.fastframework.core.FASTEventDispatcher;
 	import doot.IView;
 	import doot.view.ShowHideView;
 
@@ -12,7 +13,7 @@
 	/**
 	 * @author digi3colin
 	 */
-	public class Wait implements IView{
+	public class Wait extends FASTEventDispatcher implements IView{
 		private static var ins:Wait;
 		public static function instance():Wait {
 			return ins ||new Wait();
@@ -30,7 +31,7 @@
 
 		public function message(str:String):void{
 			msg = str;
-			if(base.getView()==null){
+			if(base==null){
 				FASTLog.instance().log('[Wait message]'+str,FASTLog.LOG_LEVEL_DETAIL);
 				return;
 			}
