@@ -13,7 +13,7 @@
 		public static const EVENT_PAGE_CHANGE : String 		= "EVENT_PAGE_CHANGE";
 
 		private var maxPage : int=0;
-		private var pageId : int=0;
+		private var pageId : int=-1;
 
 		public function Paging() {
 		}
