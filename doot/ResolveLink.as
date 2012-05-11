@@ -40,46 +40,44 @@
 			//if load absolute path resource, no need to resolve link.
 			if(fileName.indexOf("http://")==0)return fileName;
 
+			if(isDynamicAsset==true){return _server+fileName;}
+
 			//if local running, should remove the query in url
 			if(isLocalRunning){
 				fileName = fileName.split('?')[0];
 			}
 
 			//resolve link by enviorment;
-			if(isDynamicAsset==true){
-				return _server+fileName;
-			}else{
-				var ext:String = String(fileName.split("?")[0]).split(".")[1];
-				var specifyFolder:String = "";
-				//only swf on server append no cache;
-				var noCache:String = (_swfPath.indexOf('http://')==0)?'&r='+Math.floor(Math.random()*10000):'';
 
-				switch(ext){
-						case "jpg":
-						case "jpeg":
-						case "gif":
-						case "png":
-							specifyFolder = "../images/";
-							noCache="";
-							break;
-						case "flv":
-							specifyFolder = "../flv/";
-							noCache="";
-							break;
-						case "xml":
-							specifyFolder = "../xml/";
-							break;
-						case "swf":
-							specifyFolder = "";
-							break;
-						default:
-							specifyFolder = "../";
-				}
+			var ext:String = String(fileName.split("?")[0]).split(".")[1];
+			var specifyFolder:String = "";
+			//only swf on server append no cache;
+			var noCache:String = (_swfPath.indexOf('http://')==0)?'&r='+Math.floor(Math.random()*10000):'';
 
-
-				var path:String = _swfPath+specifyFolder+fileName;
-				return (noCache=="")?path:addCacheString(path, noCache);
+			switch(ext){
+					case "jpg":
+					case "jpeg":
+					case "gif":
+					case "png":
+						specifyFolder = "../images/";
+						noCache="";
+						break;
+					case "flv":
+						specifyFolder = "../flv/";
+						noCache="";
+						break;
+					case "xml":
+						specifyFolder = "../xml/";
+						break;
+					case "swf":
+						specifyFolder = "";
+						break;
+					default:
+						specifyFolder = "../";
 			}
+
+			var path:String = _swfPath+specifyFolder+fileName;
+			return (noCache=="")?path:addCacheString(path, noCache);
 		}
 
 		private function addCacheString(path:String,cacheString:String):String{
