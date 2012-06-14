@@ -1,8 +1,7 @@
 ﻿package doot{
 	import com.fastframework.core.FASTEventDispatcher;
-	import com.moet.birthday.card.IConfirm;
-
 	import flash.events.Event;
+
 	/**
 	 * @author Digi3Studio - Colin Leung
 	 */

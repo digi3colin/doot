@@ -14,26 +14,30 @@
 		public static const EVENT_PLAY_START:String = "EVENT_PLAYSTART";
 		private var vid:Video;
 		private var url:String;
+		private var ns:NetStream;
 		public function VimeoPlayer(vid:Video,url:String){
 			this.vid = vid;
 			this.url = url;
-		}
 
-		public function play():void{
 			var nc:NetConnection = new NetConnection();
 			nc.connect(null);
- 
-			var ns:NetStream = new NetStream(nc);
+			ns = new NetStream(nc);
 			ns.client = {
 						onMetaData:ns_onMetaData,
 						onCuePoint:ns_onCuePoint
 						};
 
 			ns.addEventListener(NetStatusEvent.NET_STATUS, onPlayStatus);
-			ns.play(url);
-
 			vid.attachNetStream(ns);
 			vid.smoothing = true;
+		}
+
+		public function play():void{
+			ns.play(url);
+		}
+
+		public function stop():void{
+			ns.close();
 		}
 
 		private function ns_onMetaData(obj:Object):void {}

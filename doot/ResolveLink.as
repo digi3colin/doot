@@ -1,47 +1,46 @@
 ﻿package doot {
-	import com.fastframework.core.SingletonError;
+	import doot.resolveLink.ResolveLinkLocal;
+	import doot.resolveLink.ResolveLinkRemote;
+
+	import com.fastframework.core.utils.SystemUtils;
+
+	import flash.display.Sprite;
 	/**
 	 * @author colin
 	 */
-	public class ResolveLink{
-		private var _swfPath:String="";
-		private var _testingServer:String="";
-		private var _server:String='';
-		private var isLocalRunning:Boolean = false;
-
+	public class ResolveLink implements IResolveLink{
 		private static var ins:ResolveLink;
 		public static function instance():ResolveLink {
 			return ins || new ResolveLink();
 		}
 
 		public function ResolveLink() {
-			if(ins!=null){throw new SingletonError(this);}
+			if(ins!=null)return;
 			ins = this;
 		}
 
-		public function setup(swfPath:String, testingServer:String=''):void{
-			if(_swfPath!=swfPath){
-				if(_swfPath!='')trace('warning:resource path '+_swfPath+' change to '+swfPath);
-				this._swfPath=swfPath;
-			}
+		private var imp:IResolveLink;
 
-			if(_testingServer!=testingServer){
-				if(_testingServer!="")trace('warning:testing server '+_testingServer+' change to '+testingServer);
-				this._testingServer=testingServer;
-			}
-			
-			this.isLocalRunning =(_swfPath.indexOf('file:///')==0);
+		public function setup(mc:Sprite, testingServer:String=''):void{
+			if(imp!=null)return;
 
-			//if is Local, use testing server, else, use relative path
-			this._server = (isLocalRunning)?this._testingServer:_swfPath.split('media/')[0];
+			var swfPath:String = SystemUtils.getMovieURLPath(mc);
+
+			if(swfPath.indexOf('file:///')==0){
+				//if is Local, use testing server
+				imp = new ResolveLinkLocal(swfPath,testingServer);
+			}else{
+				//else, use relative path
+				imp = new ResolveLinkRemote(swfPath);
+			}
 		}
 
 		public function create(fileName:String,isDynamicAsset:Boolean=false):String{
 			//if load absolute path resource, no need to resolve link.
 			if(fileName.indexOf("http://")==0)return fileName;
 
-			if(isDynamicAsset==true){return _server+fileName;}
-
+			return imp.create(fileName, isDynamicAsset);
+/*
 			//if local running, should remove the query in url
 			if(isLocalRunning){
 				fileName = fileName.split('?')[0];
@@ -77,11 +76,11 @@
 			}
 
 			var path:String = _swfPath+specifyFolder+fileName;
-			return (noCache=="")?path:addCacheString(path, noCache);
+			return (noCache=="")?path:addCacheString(path, noCache);*/
 		}
 
-		private function addCacheString(path:String,cacheString:String):String{
+/*		private function addCacheString(path:String,cacheString:String):String{
 			return path+((path.indexOf('?')==-1)?'?':'')+cacheString;
-		}
+		}*/
 	}
 }

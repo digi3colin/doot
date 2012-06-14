@@ -3,6 +3,7 @@
 
 	import com.fastframework.core.FASTEventDispatcher;
 	import com.fastframework.motion.MotionTween;
+	import com.fastframework.motion.MotionTweenEvent;
 	import com.fastframework.view.ButtonClip;
 	import com.fastframework.view.events.ButtonClipEvent;
 
@@ -18,13 +19,18 @@
 		private var motion:MotionTween;
 		private var view:Sprite;
 		private var btnClose:ButtonClip;
+		private var motionDur:Number;
 
-		public function ShowHideView(mc:Sprite,autoHide:Boolean = true){
+		public function ShowHideView(mc:Sprite,autoHide:Boolean = true,motionDur:Number=10){
+			this.motionDur = motionDur;
 			this.setView(mc, autoHide);
+
+			try{
 			if(mc['btn_close']!=null){
 				btnClose = new ButtonClip(mc['btn_close']);
 				btnClose.when(ButtonClipEvent.CLICK, onClose);
 			}
+			}catch(e:Error){}
 		}
 
 		private function onClose(e:Event):void{
@@ -33,7 +39,8 @@
 
 		public function setView(mc : Sprite,autoHide:Boolean=true) : IView {
 			view = mc;
-			motion = new MotionTween(mc);
+			motion = new MotionTween(mc,{dur:motionDur});
+			motion.when(MotionTweenEvent.END, onMotionEnd);
 			if(autoHide){
 				motion.hideSprite();
 				isHide = true;
@@ -64,6 +71,11 @@
 		
 		public function getViewName() : String {
 			return describeType(view).@name;
+		}
+
+		private function onMotionEnd(e:Event):void{
+			var type:String = (isHide)?ShowHideEvent.EVENT_HIDE_ANIMATION_END:ShowHideEvent.EVENT_SHOW_ANIMATION_END;
+			dispatchEvent(new Event(type));
 		}
 	}
 }

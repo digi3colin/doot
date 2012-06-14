@@ -1,12 +1,12 @@
 ﻿package doot {
+	import controller.system.ControllerStageSetup;
+
 	import com.fastframework.core.utils.SystemUtils;
 	import com.fastframework.net.ILoader;
 	import com.fastframework.net.LoaderLoader;
 
 	import flash.display.LoaderInfo;
 	import flash.display.Sprite;
-	import flash.display.StageAlign;
-	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.events.ProgressEvent;
 
@@ -18,22 +18,20 @@
 		private var mainView:Sprite;
 		private var loader:ILoader;
 		private var progressBar:ProgressBar;
-		private var loaderInfo:LoaderInfo;
+		
+		private var controllers:Array = [];
 
 		public function Booter(mc:Sprite) {
 			Template.bg = mc['mc_bg'];
 
-			loaderInfo = mc.loaderInfo;
-
-			mc.stage.align = StageAlign.TOP_LEFT;
-			mc.stage.scaleMode = StageScaleMode.NO_SCALE;
+			controllers.push(new ControllerStageSetup(mc.stage));
 
 			//check filesize
 			if(mc.loaderInfo.bytesTotal>7168)trace('warning: booter filesize exist 7k');
 			mc.addChild(mainView = new Sprite());
 
 			/*load main or file from flashvars */
-			ResolveLink.instance().setup(SystemUtils.getMovieURLPath(mc));
+			//ResolveLink.instance().setup(mc,Config.TESTING_SERVER);
 
 			loader = new LoaderLoader();
 			if(mc['mc_progress_bar']!=null){
@@ -41,7 +39,10 @@
 				loader.when(ProgressEvent.PROGRESS, loading);
 			}
 
+			var loaderInfo:LoaderInfo = mc.loaderInfo;
 			var fileToLoad:String= loaderInfo.parameters['file']||"main.swf";
+
+//			fileToLoad = "media/asia/en/site/swf/main.swf";
 
 			var parameters:Array = [];
 			parameters['sessionId'] = loaderInfo.parameters['sessionId']||'';
@@ -58,8 +59,16 @@
 
 			var queryKey:String = (strParameters.length==0)?'':((fileToLoad.match(/\?/)==null)?'?':'&');
 
+			var swfPath:String = SystemUtils.getMovieURLPath(mc);
+			var isLocal:Boolean = (swfPath.indexOf('file:///')==0);
+			var serverPath:String = swfPath.split('media/')[0];
+
+			var absolutefileToLoad:String = (isLocal)?
+													fileToLoad:
+													(serverPath+fileToLoad+queryKey+strParameters.join('&'));
+
 			loader.once(Event.COMPLETE, onMainLoad);
-			loader.load(ResolveLink.instance().create(fileToLoad+queryKey+strParameters.join('&'),true));
+			loader.load(absolutefileToLoad);
 		}
 
 		private function onMainLoad(e:Event):void{
