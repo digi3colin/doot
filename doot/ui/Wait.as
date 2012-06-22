@@ -26,16 +26,15 @@
 		public function Wait() {
 			if(ins!=null)return;
 			ins = this;
-
 		}
 
 		public function message(str:String):void{
 			msg = str;
 			if(base==null){
-				FASTLog.instance().log('[Wait message]'+str,FASTLog.LOG_LEVEL_DETAIL);
+				FASTLog.instance().log('[Wait message]'+str,FASTLog.LOG_LEVEL_ACTION);
 				return;
 			}
-			this.body.text = str;
+			this.body.htmlText = '<font face="FontBody" size="12" color="#FFFFFF">'+str+'</font>';
 			this.show();
 		}
 
@@ -57,6 +56,7 @@
 		public function hide() : IView{
 			showCount--;
 			if(showCount<=0){
+				if(base==null)return this;
 				base.hide();
 			}
 			return this;
@@ -64,6 +64,7 @@
 
 		public function show() : IView {
 			showCount++;
+			if(base==null)return this;
 			base.show();
 			return this;
 		}
@@ -71,7 +72,5 @@
 		public function getViewName() : String {
 			return base.getViewName();
 		}
-		
 	}
 }
-class SingletonBlocker{}
