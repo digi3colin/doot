@@ -1,7 +1,9 @@
 ﻿package doot {
 	import controller.system.ControllerStageSetup;
+
 	import com.fastframework.net.ILoader;
 	import com.fastframework.net.LoaderLoader;
+
 	import flash.display.Sprite;
 
 	/**
@@ -9,10 +11,10 @@
 	*/
 
 	final public class Booter{
-
 		private var controllers:Array = [];
 
 		public function Booter(mc:Sprite) {
+			ResolveLink.instance().setup(mc,Config.TESTING_SERVER);
 			var loader:ILoader = new LoaderLoader();
 
 			Template.bg = mc['mc_bg'];

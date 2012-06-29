@@ -1,6 +1,7 @@
 ﻿package doot {
 	import com.fastframework.core.utils.SystemUtils;
 	import com.fastframework.net.ILoader;
+	import com.fastframework.net.LoaderEvent;
 
 	import flash.display.Loader;
 	import flash.display.LoaderInfo;
@@ -16,6 +17,7 @@
 		public function ControllerBooter(mc : Sprite,loader:ILoader) {
 			this.loader = loader;
 			mc.addChild(mainView = new Sprite());
+
 
 			/*load main or file from flashvars */
 			//ResolveLink.instance().setup(mc,Config.TESTING_SERVER);
@@ -47,10 +49,12 @@
 													fileToLoad:
 													(serverPath+fileToLoad+queryKey+strParameters.join('&'));
 
-			loader.once(Event.COMPLETE, onMainLoad);
+			loader.once(LoaderEvent.COMPLETE, onMainLoad);
 			loader.load(absolutefileToLoad);
 		}
 		private function onMainLoad(e:Event):void{
+			trace('booterController:'+(loader.getContext() as Loader).loaderInfo);
+			
 			mainView.addChild(Loader(loader.getContext()));
 		}
 	}
