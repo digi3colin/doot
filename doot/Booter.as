@@ -1,8 +1,9 @@
 ﻿package doot {
 	import com.fastframework.net.ILoader;
 	import com.fastframework.net.LoaderLoader;
-
 	import flash.display.Sprite;
+
+
 
 	/**
 	 * The wrapper for main.swf to display the loading progress as soon as possible
