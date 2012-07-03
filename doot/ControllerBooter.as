@@ -53,8 +53,6 @@
 			loader.load(absolutefileToLoad);
 		}
 		private function onMainLoad(e:Event):void{
-			trace('booterController:'+(loader.getContext() as Loader).loaderInfo);
-			
 			mainView.addChild(Loader(loader.getContext()));
 		}
 	}
