@@ -4,13 +4,27 @@
 	 * @author Digi3Studio - Colin Leung
 	 */
 	public class ResolveLinkRemote implements IResolveLink {
-		private var serverPath : String;
-		private var swfPath:String;
-		private var seed:String;
+		private var server : String;
 
-		public function ResolveLinkRemote(swfPath : String) {
-			this.serverPath = swfPath.split('media/')[0];
-			this.swfPath = swfPath.split('swf/')[0];
+		private var seed:String;
+		private var city:String;
+		private var lang:String;
+
+		private var fileName:String;
+		private var fileType:String;
+		private var usage:String;
+
+		public function ResolveLinkRemote(swfPath : String,city:String,lang:String) {
+			var preQuery:String = swfPath.split('?')[0];
+			var folders:Array = preQuery.split('/');
+
+			this.fileName = String(folders.pop());
+			this.fileType = String(folders.pop())+'/';
+			this.usage = folders.pop()+'/';
+			this.city = (city=='')?'':(city+'/');
+			this.lang = (lang=='')?'':(lang+'/');
+			this.server = swfPath.split('media/')[0];
+
 			this.seed = String((Math.random()*10000)>>0);
 		}
 
@@ -18,7 +32,7 @@
 			return path+((path.indexOf('?')==-1)?'?':'')+cacheString;
 		}
 
-		public function create(fileName : String, isDynamicAsset : Boolean = false) : String {
+		public function create(fileName : String, isDynamicAsset : Boolean = false,isMultiLang:Boolean=true) : String {
 			// file structure: http://www.digi3.com/test/media/swf/this.swf
 			// server path:    http://www.digi3.com/test/
 			// input string:   test.xml?hello=1
@@ -31,12 +45,15 @@
 			// output string:  http://www.digi3.com/test/media/hk/en/images/test.jpg
 
 			if(isDynamicAsset==true){
-				return addCacheString(serverPath+fileName,'&r='+seed);
+				return addCacheString(server+fileName,'&r='+seed);
 			}
 
+			var oFileName:String = fileName;
+
 			fileName = fileName.split('?')[0];
-			var ext:String = fileName.split(".").pop();
+
 			var specifyFolder:String = "";
+			var ext:String = fileName.split(".").pop();
 
 			switch(ext){
 					case "jpg":
@@ -45,9 +62,9 @@
 					case "png":
 						specifyFolder = "images/";
 						break;
-					case "swf":
 					case "flv":
 					case "xml":
+					case "swf":
 					case "css":
 						specifyFolder = ext+"/";
 						break;
@@ -55,7 +72,7 @@
 						specifyFolder = "";
 			}
 
-			return swfPath+specifyFolder+fileName;
+			return server+'media/'+((isMultiLang==true)?(city+lang):'')+usage+specifyFolder+oFileName;
 		}
 	}
 }

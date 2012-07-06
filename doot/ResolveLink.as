@@ -21,25 +21,24 @@
 
 		private var imp:IResolveLink;
 
-		public function setup(mc:Sprite, testingServer:String=''):void{
+		public function setup(mc:Sprite, testingServer:String,city:String,lang:String):void{
 			if(imp!=null)return;
 
 			var swfPath:String = SystemUtils.getMovieURLPath(mc);
-
 			if(swfPath.indexOf('file:///')==0){
 				//if is Local, use testing server
-				imp = new ResolveLinkLocal(swfPath,testingServer);
+				imp = new ResolveLinkLocal(swfPath,testingServer,city,lang);
 			}else{
 				//else, use relative path
-				imp = new ResolveLinkRemote(swfPath);
+				imp = new ResolveLinkRemote(swfPath,city,lang);
 			}
 		}
 
-		public function create(fileName:String,isDynamicAsset:Boolean=false):String{
+		public function create(fileName:String,isDynamicAsset:Boolean=false,isMultiLang:Boolean=true):String{
 			//if load absolute path resource, no need to resolve link.
 			if(fileName.indexOf("http://")==0)return fileName;
 
-			return imp.create(fileName, isDynamicAsset);
+			return imp.create(fileName, isDynamicAsset,isMultiLang);
 /*
 			//if local running, should remove the query in url
 			if(isLocalRunning){

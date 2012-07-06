@@ -1,5 +1,4 @@
 ﻿package doot {
-	import com.fastframework.core.utils.SystemUtils;
 	import com.fastframework.net.ILoader;
 	import com.fastframework.net.LoaderEvent;
 
@@ -40,17 +39,14 @@
 			}
 
 			var queryKey:String = (strParameters.length==0)?'':((fileToLoad.match(/\?/)==null)?'?':'&');
-
-			var swfPath:String = SystemUtils.getMovieURLPath(mc);
-			var isLocal:Boolean = (swfPath.indexOf('file:///')==0);
-			var serverPath:String = swfPath.split('media/')[0];
-
-			var absolutefileToLoad:String = (isLocal)?
-													fileToLoad:
-													(serverPath+fileToLoad+queryKey+strParameters.join('&'));
+			var fileWithQueryToLoad:String = fileToLoad+queryKey+strParameters.join('&');
 
 			loader.once(LoaderEvent.COMPLETE, onMainLoad);
-			loader.load(absolutefileToLoad);
+			loader.load(ResolveLink.instance().create(fileWithQueryToLoad));
+
+//			TextField(mc['txtDebug']).appendText(fileWithQueryToLoad+'\n');
+//			TextField(mc['txtDebug']).appendText(ResolveLink.instance().create(fileWithQueryToLoad)+'\n');
+			
 		}
 		private function onMainLoad(e:Event):void{
 			mainView.addChild(Loader(loader.getContext()));

@@ -1,4 +1,5 @@
 ﻿package doot {
+	import doot.multifont.UnicodeScriptsTable;
 	import com.fastframework.core.FASTEventDispatcher;
 	import com.fastframework.core.utils.StringUtils;
 	import com.fastframework.net.ILoader;
@@ -24,20 +25,22 @@
 		private var loadAsset:LoadAsset;
 		private var mcCmap:Sprite;
 		
-		private var cmap:BitmapData;
+		private var cmap : BitmapData;
+		private var fontCount : int;
 
-		public function MultiFontText(fontShortName:String) {
+		public function MultiFontText(fontShortName:String,fontCount:int) {
 			//4 byte utf8 have 1FFFFF code point.
 			//1FFFFF = 2097151 bits = 262144 bytes;
 			//codepoint=0x4E12, codeRange=0x4E1, fontRange=0x4E
 			//every fontRange has 16 code point = 16348
 			this.fontShortName = fontShortName;
+			this.fontCount = fontCount;
 			loadAsset = new LoadAsset();
 			loadAsset.when(LoadAsset.EVENT_READY,loadReady);
 
 			var cmapLoader:ILoader = LoaderFactory.instance().getSWFLoader(mcCmap = new Sprite());
 			cmapLoader.once(LoaderEvent.READY, onCmapLoaded);
-			cmapLoader.load('cmap.png');
+			cmapLoader.load(ResolveLink.instance().create('cmap.png',false,false));
 		}
 
 		private function onCmapLoaded(e:Event):void{
@@ -55,11 +58,11 @@
 			this.text = text;
 
 			for(var i:int=0;i<codePoints.length;i++){
-				loadAsset.loadAsset('font/'+getFontSet(codePoints[i], 'script', 8));
+				loadAsset.loadAsset('font/'+getFontSet(codePoints[i], 'script', fontCount));
 			}
 		}
 
-		public function getHTMLText(size:int=12):String{
+		public function getHTMLText(latinSize:int=12,hanSize:int=8):String{
 			if(loadAsset.getPendingCount()>0)return '...';
 
 			//parse every char with specific font.
@@ -68,9 +71,23 @@
 			var count:int = codePoints.length;
 
 			for(var i:int=0;i<count;i++){
-				result += '<font face="'+getFontName(codePoints[i], 'script', cmap)+'" size="'+size+'">'+String.fromCharCode(codePoints[i])+'<font>';
+				result += '<font face="'+getFontName(codePoints[i], 'script', cmap)+'" size="'+getFontSize(codePoints[i],latinSize,hanSize)+'">'+String.fromCharCode(codePoints[i])+'<font>';
 			}
 			return result;
+		}
+
+		private function getFontSize(charCode:int,latinFontSize:int,hanFontSize:int):String{
+			var scriptCode:int = cmap.getPixel(charCode&0xFF,charCode>>8)&0xFFFF0;
+			var script:String = UnicodeScriptsTable.instance().getScriptByCode(scriptCode);
+
+			switch(script){
+				case UnicodeScriptsTable.Latin:
+					return latinFontSize.toString();
+				case UnicodeScriptsTable.Han:
+					return hanFontSize.toString();
+				default:
+					return latinFontSize.toString();
+			}
 		}
 
 		public function getFontSet(charCode:int,fontName:String,fontCount:int=16):String{

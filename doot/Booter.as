@@ -1,6 +1,7 @@
 ﻿package doot {
 	import com.fastframework.net.ILoader;
 	import com.fastframework.net.LoaderLoader;
+
 	import flash.display.Sprite;
 
 	/**
@@ -11,7 +12,15 @@
 		private var controllers:Array = [];
 
 		public function Booter(mc:Sprite,configURL:String) {
-			ResolveLink.instance().setup(mc,configURL);
+			var lang:String = mc.loaderInfo.parameters['lang']||LocaleConfig.LANG;
+			var city:String = mc.loaderInfo.parameters['city']||LocaleConfig.CITY;
+
+			ResolveLink.instance().setup(mc,configURL,city,lang);
+/*			TextField(mc['txtDebug']).appendText(ResolveLink.instance().create('main.swf')+'\n');
+			TextField(mc['txtDebug']).appendText(ResolveLink.instance().create('main.swf',true)+'\n');
+			TextField(mc['txtDebug']).appendText(ResolveLink.instance().create('main.swf',false,false)+'\n');
+			TextField(mc['txtDebug']).appendText(ResolveLink.instance().create('main.swf',false,true)+'\n');*/
+			
 			var loader:ILoader = new LoaderLoader();
 
 			Template.bg = mc['mc_bg'];
