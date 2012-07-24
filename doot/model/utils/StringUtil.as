@@ -87,7 +87,7 @@ package doot.model.utils
 		*/			
 		public static function trim(input:String):String
 		{
-			return StringUtil.ltrim(StringUtil.rtrim(input));
+			return input.replace(/^\s+|\s+$/g, '');
 		}
 
 		/**
@@ -237,6 +237,14 @@ package doot.model.utils
 		}
 		
 		public static function capitalizeWord(s:String):String{
+			return s.toLowerCase().replace(/\b[a-z]/g, StringUtil.cnvrt);
+		}
+		
+		private static function cnvrt(arg:String,...args):String{
+			return arg.toUpperCase();
+		}
+
+		public static function capitalizeWord2(s:String):String{
 			var wordArray:Array = s.split(" ");
 			for (var i:Number = 0; i<wordArray.length; i++) {
 			    wordArray[i] = 

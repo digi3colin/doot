@@ -1,8 +1,8 @@
 ﻿package doot.model {
+	import doot.I18n;
 	import doot.ResolveLink;
 	import doot.model.encoder.PNGEncoder;
 	import doot.ui.Prompt;
-
 	import com.fastframework.core.FASTLog;
 	import com.fastframework.core.ILog;
 	import com.fastframework.net.ILoader;
@@ -10,7 +10,6 @@
 	import com.fastframework.utils.AS2;
 	import com.fastframework.view.ButtonClip;
 	import com.fastframework.view.events.ButtonClipEvent;
-
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -71,7 +70,7 @@
 			screencap = new BitmapData(500,300,false,0);
 			screencap.draw(this.mcRoot, new Matrix(0.5,0,0,0.5));
 
-			Prompt.instance().popup("Bug report.", "The following user activity will be submitted.\n"+txt.text, cancel, doSubmit, true);
+			Prompt.instance().popup(I18n.t("Bug report."), I18n.t("The following user activity will be submitted.")+"\n"+txt.text, cancel, doSubmit, true);
 		}
 		
 		private function cancel():void{

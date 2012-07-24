@@ -12,24 +12,25 @@
 	 * @author Digi3Studio - Colin Leung
 	 */
 	public class DragItem extends FASTEventDispatcher{
-		private static var ins : DragItem;
+//		private static var ins : DragItem;
 		public static const EVENT_DROP : String = 'EVENT_DROP';
 		private var context:Sprite;
 		private var mcToDrop:DisplayObject;
-		public static function instance():DragItem{
-			return ins||new DragItem();
-		}
+//		public static function instance():DragItem{
+//			return ins||new DragItem();
+//		}
 		
-		public function DragItem(){
-			if(ins!=null)return;
-			ins = this;
+		public function DragItem(mc:Sprite){
+//			if(ins!=null)return;
+//			ins = this;
 			context = new Sprite();
 			context.filters = [new DropShadowFilter(2, 90, 0, 0.5, 3, 3)];
+			mc.addChild(context);
 		}
 		
-		public function setView(mc:Sprite):void{
-			mc.addChild(context);
-		};
+/*		public function setView(mc:Sprite):void{
+
+		};*/
 		
 		public function drag(mcToDrop:DisplayObject):void{
 			context.addChild(this.mcToDrop = mcToDrop);

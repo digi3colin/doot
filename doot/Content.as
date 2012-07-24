@@ -8,7 +8,8 @@
 	import com.fastframework.net.ILoader;
 	import com.fastframework.net.LoaderEvent;
 	import com.fastframework.net.LoaderFactory;
-
+	import flash.display.DisplayObject;
+	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.events.Event;
 
@@ -65,15 +66,18 @@
 		}
 
 		private function onFadeOutAndLoad(e:MotionTweenEvent):void {
+			clearUpTargetSprite();
 			loadAction();
 		}
 
+		private function clearUpTargetSprite():void{
+			for(var i:int=0;i<movieContainer.numChildren;i++){
+				var mc:DisplayObject = movieContainer.removeChildAt(0);
+				if(mc is Loader)Loader(mc).unloadAndStop();
+			}
+		}
 
 		private function loadAction():void{
-			for(var i:int=0;i<movieContainer.numChildren;i++){
-				movieContainer.removeChildAt(i);
-			}
-
 			var url:String = prefix+currentNavKey+"."+extension;
 
 			var ldr:ILoader = LoaderFactory.instance().getSWFLoader(movieContainer);

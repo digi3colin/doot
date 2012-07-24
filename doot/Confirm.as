@@ -1,7 +1,7 @@
 ﻿package doot {
 	import com.fastframework.core.FASTEventDispatcher;
-
 	import flash.events.Event;
+
 	/**
 	 * @author Digi3Studio - Colin Leung
 	 */
