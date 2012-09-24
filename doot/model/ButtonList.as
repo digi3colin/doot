@@ -1,7 +1,8 @@
 ﻿package doot.model {
+	import doot.view.ButtonClip;
+	import doot.view.events.ButtonClipEvent;
+
 	import com.fastframework.core.FASTEventDispatcher;
-	import com.fastframework.view.ButtonClip;
-	import com.fastframework.view.events.ButtonClipEvent;
 
 	import flash.events.Event;
 	import flash.events.MouseEvent;

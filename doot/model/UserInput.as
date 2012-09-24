@@ -1,6 +1,8 @@
 ﻿package doot.model {
+	import com.fastframework.core.SingletonError;
+	import doot.utils.FASTMouse;
+
 	import com.fastframework.core.FASTEventDispatcher;
-	import com.fastframework.core.FASTMouse;
 	import com.fastframework.core.IFASTEventDispatcher;
 
 	import flash.display.InteractiveObject;
@@ -32,7 +34,7 @@
 		}
 
 		public function UserInput() {
-			if(ins!=null){return;}
+			if(ins!=null){throw new SingletonError(this);}
 			ins = this;
 		}
 

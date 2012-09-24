@@ -1,13 +1,13 @@
 ﻿package doot {
-	import flash.filters.DropShadowFilter;
 	import doot.model.UserInput;
+	import doot.utils.FASTMouse;
 
 	import com.fastframework.core.FASTEventDispatcher;
-	import com.fastframework.core.FASTMouse;
 
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.filters.DropShadowFilter;
 	/**
 	 * @author Digi3Studio - Colin Leung
 	 */

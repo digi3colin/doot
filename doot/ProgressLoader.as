@@ -1,8 +1,9 @@
 ﻿package doot {
+	import doot.collection.Queue;
+
+	import com.fastframework.core.AS2;
 	import com.fastframework.core.FASTEventDispatcher;
-	import com.fastframework.core.Queue;
 	import com.fastframework.net.ILoader;
-	import com.fastframework.utils.AS2;
 
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
@@ -122,8 +123,8 @@
 }
 import doot.IProgressBar;
 import doot.ProgressLoader;
+import doot.utils.ICommand;
 
-import com.fastframework.core.ICommand;
 import com.fastframework.net.ILoader;
 
 import flash.display.DisplayObject;

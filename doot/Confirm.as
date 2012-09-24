@@ -1,4 +1,4 @@
-﻿package doot{
+﻿package doot {
 	import com.fastframework.core.FASTEventDispatcher;
 	import flash.events.Event;
 

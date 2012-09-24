@@ -1,11 +1,11 @@
 ﻿package doot.sprite.edit {
 	import doot.model.UserInput;
+	import doot.view.ButtonClip;
+	import doot.view.IButtonClip;
+	import doot.view.events.ButtonClipEvent;
 
 	import com.fastframework.core.FASTEventDispatcher;
 	import com.fastframework.core.IFASTEventDispatcher;
-	import com.fastframework.view.ButtonClip;
-	import com.fastframework.view.IButtonClip;
-	import com.fastframework.view.events.ButtonClipEvent;
 
 	import flash.display.Sprite;
 	import flash.events.Event;

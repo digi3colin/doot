@@ -1,10 +1,10 @@
 ﻿package doot.ui {
+	import com.fastframework.core.SingletonError;
 	import doot.IView;
 	import doot.view.ShowHideView;
+	import doot.view.ButtonClip;
 
 	import com.fastframework.core.FASTEventDispatcher;
-	import com.fastframework.view.ButtonClip;
-
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
@@ -20,7 +20,7 @@
 		}
 		
 		public function Prompt() {
-			if(ins!=null)return;
+			if(ins!=null)throw new SingletonError(this);
 			ins = this;
 		}
 		

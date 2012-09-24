@@ -1,9 +1,9 @@
 ﻿package doot {
 	import asset.BtnPageNav;
 
-	import com.fastframework.view.ButtonClip;
-	import com.fastframework.view.FASTRadioButton;
-	import com.fastframework.view.events.ButtonClipEvent;
+	import doot.view.ButtonClip;
+	import doot.view.FASTRadioButton;
+	import doot.view.events.ButtonClipEvent;
 
 	import flash.display.Sprite;
 	import flash.events.Event;

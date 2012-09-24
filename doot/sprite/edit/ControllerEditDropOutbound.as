@@ -2,8 +2,7 @@
 	import doot.DragItem;
 	import doot.model.UserInput;
 	import doot.model.utils.GeomUtil;
-
-	import com.fastframework.core.FASTMouse;
+	import doot.utils.FASTMouse;
 
 	import flash.events.Event;
 	import flash.geom.Rectangle;

@@ -4,10 +4,9 @@
 	import doot.sprite.transform.SpriteDrawTransform;
 	import doot.sprite.transform.SpriteTransform;
 
-	import com.fastframework.core.EventDispatcherUtils;
+	import com.fastframework.core.FASTSpriteEventDispatcher;
 	import com.fastframework.core.IFASTEventDispatcher;
 
-	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
@@ -16,7 +15,7 @@
 	/**
 	 * @author Digi3Studio - Colin Leung
 	 */
-	public class SpriteSelectable extends Sprite implements IFASTEventDispatcher, ITransformBehaviour {
+	public class SpriteSelectable extends FASTSpriteEventDispatcher implements IFASTEventDispatcher, ITransformBehaviour {
 		public static const EVENT_CHANGE : String = Event.CHANGE;
 		private var imp:ITransformBehaviour;
 		public var disableToolOption:int=0;
@@ -34,16 +33,6 @@
 			if(UserInput.instance().isMouseDown==true)return;
 			//ready to select this sprite;
 			SpriteSelected.instance().select(this);
-		}
-
-		public function when(eventType : String, callback : Function) : * {
-			this.addEventListener(eventType, callback, false,0,true);
-			return this;
-		}
-
-		public function once(eventType : String, callback : Function) : * {
-			EventDispatcherUtils.instance().once(this, eventType, callback);
-			return this;
 		}
 
 		public function rotate(radian:Number):void{
@@ -74,6 +63,7 @@
 			}
 			if(this.parent==null)return false;
 			this.parent.removeChild(this);
+			dispatchEvent(new Event(Event.CHANGE));
 			return true;
 		}
 

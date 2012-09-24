@@ -1,15 +1,15 @@
 ﻿package doot.sys {
 	import doot.I18n;
 	import doot.ResolveLink;
+	import doot.net.LoaderFactory;
 
 	import i18n.SERVER;
 
 	import com.fastframework.core.FASTEventDispatcher;
-	import com.fastframework.core.FASTLog;
 	import com.fastframework.core.IFASTEventDispatcher;
 	import com.fastframework.core.SingletonError;
+	import com.fastframework.log.FASTLog;
 	import com.fastframework.net.ILoader;
-	import com.fastframework.net.LoaderFactory;
 
 	import flash.events.Event;
 

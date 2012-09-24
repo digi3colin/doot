@@ -1,8 +1,8 @@
 ﻿package doot.sprite {
 	import doot.model.UserInput;
+	import doot.utils.FASTMouse;
 
 	import com.fastframework.core.FASTEventDispatcher;
-	import com.fastframework.core.FASTMouse;
 	import com.fastframework.core.IFASTEventDispatcher;
 
 	import flash.events.Event;

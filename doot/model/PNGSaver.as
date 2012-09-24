@@ -1,10 +1,11 @@
 ﻿package doot.model {
 	import doot.model.encoder.PNGEncoder;
+	import doot.net.LoaderEvent;
+	import doot.net.LoaderFactory;
 
 	import com.fastframework.core.FASTEventDispatcher;
+	import com.fastframework.core.SingletonError;
 	import com.fastframework.net.ILoader;
-	import com.fastframework.net.LoaderEvent;
-	import com.fastframework.net.LoaderFactory;
 
 	import flash.display.BitmapData;
 	import flash.events.Event;
@@ -23,8 +24,8 @@
 		private var savedPath:String;
 
 		public function PNGSaver(){
-			if(PNGSaver.ins!=null)return;
-			PNGSaver.ins = this;
+			if(ins!=null)throw new SingletonError(this);
+			ins = this;
 
 			uploader = LoaderFactory.instance().getXMLLoader();
 			uploader.when(LoaderEvent.READY, uploaded);

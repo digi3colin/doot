@@ -1,8 +1,9 @@
 ﻿package doot.sprite.edit.editBehaviour {
-	import com.fastframework.core.FASTMouse;
 	import doot.sprite.SpriteSelectable;
 	import doot.sprite.SpriteSelected;
 	import doot.sprite.edit.IEditToolBehaviour;
+	import doot.utils.FASTMouse;
+
 	import flash.geom.Point;
 
 
