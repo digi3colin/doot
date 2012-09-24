@@ -30,8 +30,8 @@
 		}
 
 		private var _session:String='';
-		private var _lang:String = 'en';
-		private var _city:String = 'asia';
+		private var _lang:String;
+		private var _city:String;
 
 		private var ldrSession:ILoader;
 		public function setSession(str:String):void{

@@ -1,5 +1,6 @@
 ﻿package doot.model {
 	import com.fastframework.core.SingletonError;
+	import doot.I18n;
 	import doot.ResolveLink;
 	import doot.model.encoder.PNGEncoder;
 	import doot.net.LoaderFactory;
@@ -11,7 +12,6 @@
 	import com.fastframework.log.FASTLog;
 	import com.fastframework.log.ILog;
 	import com.fastframework.net.ILoader;
-
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -72,7 +72,7 @@
 			screencap = new BitmapData(500,300,false,0);
 			screencap.draw(this.mcRoot, new Matrix(0.5,0,0,0.5));
 
-			Prompt.instance().popup("Bug report.", "The following user activity will be submitted.\n"+txt.text, cancel, doSubmit, true);
+			Prompt.instance().popup(I18n.t("Bug report."), I18n.t("The following user activity will be submitted.")+"\n"+txt.text, cancel, doSubmit, true);
 		}
 		
 		private function cancel():void{

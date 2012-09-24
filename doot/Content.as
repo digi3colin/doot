@@ -9,7 +9,8 @@
 	import com.fastframework.navigation.Navigation;
 	import com.fastframework.navigation.NavigationEvent;
 	import com.fastframework.net.ILoader;
-
+	import flash.display.DisplayObject;
+	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.events.Event;
 
@@ -63,19 +64,21 @@
 			if(fadein.isTweening()==true)fadein.killTween();
 			if(fadeout.isTweening()==true)return;
 			fadeout.startTween();
-			trace('onNavChange');
 		}
 
 		private function onFadeOutAndLoad(e:Event):void {
+			clearUpTargetSprite();
 			loadAction();
 		}
 
+		private function clearUpTargetSprite():void{
+			for(var i:int=0;i<movieContainer.numChildren;i++){
+				var mc:DisplayObject = movieContainer.removeChildAt(0);
+				if(mc is Loader)Loader(mc).unloadAndStop();
+			}
+		}
 
 		private function loadAction():void{
-			for(var i:int=0;i<movieContainer.numChildren;i++){
-				movieContainer.removeChildAt(i);
-			}
-
 			var url:String = prefix+currentNavKey+"."+extension;
 
 			var ldr:ILoader = LoaderFactory.instance().getSWFLoader(movieContainer);

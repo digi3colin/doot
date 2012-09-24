@@ -1,89 +1,85 @@
 ﻿package doot {
-	import com.fastframework.core.SingletonError;
+	import doot.resolveLink.ResolveLinkLocal;
+	import doot.resolveLink.ResolveLinkRemote;
+
+	import com.fastframework.core.utils.SystemUtils;
+
+	import flash.display.Sprite;
 	/**
 	 * @author colin
 	 */
-	public class ResolveLink{
-		private var _swfPath:String="";
-		private var _testingServer:String="";
-		private var _server:String='';
-		private var isLocalRunning:Boolean = false;
-
+	public class ResolveLink implements IResolveLink{
 		private static var ins:ResolveLink;
 		public static function instance():ResolveLink {
 			return ins || new ResolveLink();
 		}
 
 		public function ResolveLink() {
-			if(ins!=null){throw new SingletonError(this);}
+			if(ins!=null)return;
 			ins = this;
 		}
 
-		public function setup(swfPath:String, testingServer:String=''):void{
-			if(_swfPath!=swfPath){
-				if(_swfPath!='')trace('warning:resource path '+_swfPath+' change to '+swfPath);
-				this._swfPath=swfPath;
-			}
+		private var imp:IResolveLink;
 
-			if(_testingServer!=testingServer){
-				if(_testingServer!="")trace('warning:testing server '+_testingServer+' change to '+testingServer);
-				this._testingServer=testingServer;
-			}
-			
-			this.isLocalRunning =(_swfPath.indexOf('file:///')==0);
+		public function setup(mc:Sprite, testingServer:String,city:String,lang:String):void{
+			if(imp!=null)return;
 
-			//if is Local, use testing server, else, use relative path
-			this._server = (isLocalRunning)?this._testingServer:_swfPath.split('media/')[0];
+			var swfPath:String = SystemUtils.getMovieURLPath(mc);
+			if(swfPath.indexOf('file:///')==0){
+				//if is Local, use testing server
+				imp = new ResolveLinkLocal(swfPath,testingServer,city,lang);
+			}else{
+				//else, use relative path
+				imp = new ResolveLinkRemote(swfPath,city,lang);
+			}
 		}
 
-		public function create(fileName:String,isDynamicAsset:Boolean=false):String{
+		public function create(fileName:String,isDynamicAsset:Boolean=false,isMultiLang:Boolean=true):String{
 			//if load absolute path resource, no need to resolve link.
 			if(fileName.indexOf("http://")==0)return fileName;
 
+			return imp.create(fileName, isDynamicAsset,isMultiLang);
+/*
 			//if local running, should remove the query in url
 			if(isLocalRunning){
 				fileName = fileName.split('?')[0];
 			}
 
 			//resolve link by enviorment;
-			if(isDynamicAsset==true){
-				return _server+fileName;
-			}else{
-				var ext:String = String(fileName.split("?")[0]).split(".")[1];
-				var specifyFolder:String = "";
-				//only swf on server append no cache;
-				var noCache:String = (_swfPath.indexOf('http://')==0)?'&r='+Math.floor(Math.random()*10000):'';
 
-				switch(ext){
-						case "jpg":
-						case "jpeg":
-						case "gif":
-						case "png":
-							specifyFolder = "../images/";
-							noCache="";
-							break;
-						case "flv":
-							specifyFolder = "../flv/";
-							noCache="";
-							break;
-						case "xml":
-							specifyFolder = "../xml/";
-							break;
-						case "swf":
-							specifyFolder = "";
-							break;
-						default:
-							specifyFolder = "../";
-				}
+			var ext:String = String(fileName.split("?")[0]).split(".")[1];
+			var specifyFolder:String = "";
+			//only swf on server append no cache;
+			var noCache:String = (_swfPath.indexOf('http://')==0)?'&r='+Math.floor(Math.random()*10000):'';
 
-
-				var path:String = _swfPath+specifyFolder+fileName;
-				return (noCache=="")?path:addCacheString(path, noCache);
+			switch(ext){
+					case "jpg":
+					case "jpeg":
+					case "gif":
+					case "png":
+						specifyFolder = "../images/";
+						noCache="";
+						break;
+					case "flv":
+						specifyFolder = "../flv/";
+						noCache="";
+						break;
+					case "xml":
+						specifyFolder = "../xml/";
+						break;
+					case "swf":
+						specifyFolder = "";
+						break;
+					default:
+						specifyFolder = "../";
 			}
+
+			var path:String = _swfPath+specifyFolder+fileName;
+			return (noCache=="")?path:addCacheString(path, noCache);*/
 		}
 
-		private function addCacheString(path:String,cacheString:String):String{
+/*		private function addCacheString(path:String,cacheString:String):String{
 			return path+((path.indexOf('?')==-1)?'?':'')+cacheString;
-		}
+		}*/
 	}
 }

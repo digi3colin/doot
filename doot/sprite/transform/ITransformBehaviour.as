@@ -1,4 +1,4 @@
-﻿package doot.sprite {
+﻿package doot.sprite.transform {
 	/**
 	 * @author Digi3Studio - Colin Leung
 	 */

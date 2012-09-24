@@ -1,4 +1,4 @@
-﻿package doot.sprite {
+﻿package doot.sprite.transform {
 	import flash.display.Sprite;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
@@ -47,6 +47,8 @@
 			mtx.translate(center.x, center.y);
 
 			mc.transform.matrix = mtx;
+
+			this.s = s;
 		}
 
 		public function getScale() : Number {

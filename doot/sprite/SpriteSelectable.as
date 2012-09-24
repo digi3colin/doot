@@ -1,5 +1,8 @@
 ﻿package doot.sprite {
 	import doot.model.UserInput;
+	import doot.sprite.transform.ITransformBehaviour;
+	import doot.sprite.transform.SpriteDrawTransform;
+	import doot.sprite.transform.SpriteTransform;
 
 	import com.fastframework.core.FASTSpriteEventDispatcher;
 	import com.fastframework.core.IFASTEventDispatcher;
@@ -15,15 +18,22 @@
 	public class SpriteSelectable extends FASTSpriteEventDispatcher implements IFASTEventDispatcher, ITransformBehaviour {
 		public static const EVENT_CHANGE : String = Event.CHANGE;
 		private var imp:ITransformBehaviour;
+		public var disableToolOption:int=0;
 
 		public function SpriteSelectable(x:Number,y:Number) {
 			this.x = x;
 			this.y = y;
 			imp = (x==0)?new SpriteDrawTransform(this):new SpriteTransform(this);
 
-			this.when(MouseEvent.MOUSE_OVER, over);
+			this.when(MouseEvent.MOUSE_OVER, select);
 		}
 
+		private function select(e:MouseEvent):void{
+			//user doing something.. dont focus it.
+			if(UserInput.instance().isMouseDown==true)return;
+			//ready to select this sprite;
+			SpriteSelected.instance().select(this);
+		}
 		private function over(e:MouseEvent):void{
 			//user doing something.. dont focus it.
 			if(UserInput.instance().isMouseDown==true)return;
@@ -54,6 +64,9 @@
 		}
 
 		public function remove():Boolean{
+			if(SpriteSelected.instance().selectedSprite()===this){
+				SpriteSelected.instance().deselect();
+			}
 			if(this.parent==null)return false;
 			this.parent.removeChild(this);
 			dispatchEvent(new Event(Event.CHANGE));
@@ -73,6 +86,10 @@
 		public function getGlobalCenter() : Point {
 			var bbox:Rectangle = this.getBounds(this);
 			return this.localToGlobal(new Point(bbox.x+bbox.width*0.5,bbox.y+bbox.height*0.5));
+		}
+		
+		public function getAllowOption():int{
+			return disableToolOption;
 		}
 	}
 }

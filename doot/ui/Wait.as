@@ -1,7 +1,7 @@
 ﻿package doot.ui {
 	import com.fastframework.core.SingletonError;
 	import doot.IView;
-	import doot.view.AbstractView;
+	import doot.view.ShowHideView;
 
 	import com.fastframework.log.FASTLog;
 
@@ -13,34 +13,33 @@
 	/**
 	 * @author digi3colin
 	 */
-	public class Wait implements IView{
+	public class Wait extends FASTEventDispatcher implements IView{
 		private static var ins:Wait;
 		public static function instance():Wait {
 			return ins ||new Wait();
 		}
 		private var msg:String="";
-		private var base:AbstractView;
+		private var base:ShowHideView;
 		private var body:TextField;
 		private var showCount:int=0;
 
 		public function Wait() {
 			if(ins!=null)throw new SingletonError(this);
 			ins = this;
-			base = new AbstractView();
 		}
 
 		public function message(str:String):void{
 			msg = str;
-			if(base.getView()==null){
-				FASTLog.instance().log('[Wait message]'+str,FASTLog.LOG_LEVEL_DETAIL);
+			if(base==null){
+				FASTLog.instance().log('[Wait message]'+str,FASTLog.LOG_LEVEL_ACTION);
 				return;
 			}
-			this.body.text = str;
+			this.body.htmlText = '<font face="FontBody" size="12" color="#FFFFFF">'+str+'</font>';
 			this.show();
 		}
 
 		public function setView(mc:Sprite,autoHide:Boolean=true):IView{
-			base.setView(mc,autoHide);
+			base = base|| new ShowHideView(mc, autoHide);
 
 			this.body = mc['txt_body'];
 			this.body.defaultTextFormat = new TextFormat('FontBody');
@@ -57,6 +56,7 @@
 		public function hide() : IView{
 			showCount--;
 			if(showCount<=0){
+				if(base==null)return this;
 				base.hide();
 			}
 			return this;
@@ -64,6 +64,7 @@
 
 		public function show() : IView {
 			showCount++;
+			if(base==null)return this;
 			base.show();
 			return this;
 		}
@@ -71,7 +72,5 @@
 		public function getViewName() : String {
 			return base.getViewName();
 		}
-		
 	}
 }
-class SingletonBlocker{}

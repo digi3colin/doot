@@ -12,8 +12,8 @@
 		private var highlighter:Sprite;
 
 		public function SpriteSelectedHighlight(){
-			SpriteSelected.instance().addEventListener(SpriteSelected.SELECT, onSpriteSelect,false,-900,true);
-			SpriteSelected.instance().when(SpriteSelected.DESELECT, onDeselect);
+			SpriteSelected.instance().addEventListener(SpriteSelected.EVENT_SELECT, onSpriteSelect,false,-900,true);
+			SpriteSelected.instance().when(SpriteSelected.EVENT_DESELECT, onDeselect);
 
 			highlighter = new Sprite();
 			highlighter.mouseEnabled = false;
