@@ -3,8 +3,7 @@
 	import doot.model.utils.GeomUtil;
 	import doot.sprite.SpriteSelected;
 	import doot.sprite.edit.IEditToolBehaviour;
-
-	import com.fastframework.core.FASTMouse;
+	import doot.utils.FASTMouse;
 
 	import flash.events.Event;
 	import flash.geom.Rectangle;

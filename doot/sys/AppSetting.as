@@ -3,8 +3,6 @@
 	import doot.ResolveLink;
 	import doot.net.LoaderFactory;
 
-	import i18n.SERVER;
-
 	import com.fastframework.core.FASTEventDispatcher;
 	import com.fastframework.core.IFASTEventDispatcher;
 	import com.fastframework.core.SingletonError;
@@ -12,7 +10,6 @@
 	import com.fastframework.net.ILoader;
 
 	import flash.events.Event;
-
 
 	/**
 	 * @author colin
@@ -23,6 +20,8 @@
 	public class AppSetting extends FASTEventDispatcher implements IFASTEventDispatcher{
 		private static var ins : AppSetting;
 		public static const EVENT_SESSION_UPDATE : String = "EVENT_SESSION_UPDATE";
+		public static const URL_SESSION : String = "URL_SESSION";
+
 		public static function instance():AppSetting {
 			return ins || new AppSetting();
 		}
@@ -47,7 +46,7 @@
 
 				ldrSession = LoaderFactory.instance().getXMLLoader();
 				ldrSession.when(Event.COMPLETE,session2);
-				ldrSession.load(ResolveLink.instance().create(I18n.t(SERVER.URL_SESSION),true));//'users/getSessionId.xml'
+				ldrSession.load(ResolveLink.instance().create(I18n.t(AppSetting.URL_SESSION),true));//'users/getSessionId.xml'
 			}
 			_session = str;
 		}

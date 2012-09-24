@@ -1,18 +1,18 @@
 ﻿package doot.model {
-	import com.fastframework.core.SingletonError;
 	import doot.I18n;
 	import doot.ResolveLink;
 	import doot.model.encoder.PNGEncoder;
 	import doot.net.LoaderFactory;
 	import doot.ui.Prompt;
-	import i18n.SERVER;
 	import doot.view.ButtonClip;
 	import doot.view.events.ButtonClipEvent;
 
 	import com.fastframework.core.AS2;
+	import com.fastframework.core.SingletonError;
 	import com.fastframework.log.FASTLog;
 	import com.fastframework.log.ILog;
 	import com.fastframework.net.ILoader;
+
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -26,7 +26,9 @@
 	 * @author digi3colin
 	 */
 	public class ActionLogger implements ILog{
-		private static var ins:ActionLogger;
+		private static var ins : ActionLogger;
+		public static const URL_BUG : String = "URL_BUG";
+
 		public static function instance():ActionLogger {
 			return ins || new ActionLogger();
 		}
@@ -84,7 +86,7 @@
 			mcBtn.visible = false;
 
 			var data:ByteArray = PNGEncoder.encode(screencap);
-			ldSaveScreenCaptureImage.sendBinaryAndLoad(ResolveLink.instance().create(I18n.t(SERVER.URL_BUG)+'/saveScreenshot'), data);		
+			ldSaveScreenCaptureImage.sendBinaryAndLoad(ResolveLink.instance().create(I18n.t(ActionLogger.URL_BUG)+'/saveScreenshot'), data);		
 		}
 		
 		private function onScreenCaptureUpload(...e):void{
@@ -96,7 +98,7 @@
 			urlVariables['screenshot']	= xResult['file'];
 
 			ldSaveMessage.sendAndLoad(
-				ResolveLink.instance().create(I18n.t(SERVER.URL_BUG)+'/submit'),
+				ResolveLink.instance().create(I18n.t(ActionLogger.URL_BUG)+'/submit'),
 				urlVariables,
 				URLRequestMethod.POST
 			);
