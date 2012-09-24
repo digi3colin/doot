@@ -1,8 +1,8 @@
 ﻿package doot.ui {
+	import com.fastframework.core.SingletonError;
 	import doot.IView;
 	import doot.view.AbstractView;
-
-	import com.fastframework.view.ButtonClip;
+	import doot.view.ButtonClip;
 
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
@@ -18,7 +18,7 @@
 		}
 		
 		public function Prompt() {
-			if(ins!=null)return;
+			if(ins!=null)throw new SingletonError(this);
 			ins = this;
 			base = new AbstractView();
 		}

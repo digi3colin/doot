@@ -1,15 +1,16 @@
 ﻿package doot.model {
+	import com.fastframework.core.SingletonError;
 	import doot.ResolveLink;
 	import doot.model.encoder.PNGEncoder;
+	import doot.net.LoaderFactory;
 	import doot.ui.Prompt;
+	import doot.view.ButtonClip;
+	import doot.view.events.ButtonClipEvent;
 
-	import com.fastframework.core.FASTLog;
-	import com.fastframework.core.ILog;
+	import com.fastframework.core.AS2;
+	import com.fastframework.log.FASTLog;
+	import com.fastframework.log.ILog;
 	import com.fastframework.net.ILoader;
-	import com.fastframework.net.LoaderFactory;
-	import com.fastframework.utils.AS2;
-	import com.fastframework.view.ButtonClip;
-	import com.fastframework.view.events.ButtonClipEvent;
 
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
@@ -30,7 +31,7 @@
 		}
 
 		public function ActionLogger() {
-			if(ins!=null)return;
+			if(ins!=null)throw new SingletonError(this);
 			ins = this;
 
 			base = FASTLog.instance();

@@ -1,7 +1,8 @@
 ﻿package doot {
-	import com.fastframework.core.utils.SystemUtils;
+	import doot.net.LoaderLoader;
+	import doot.utils.SystemUtils;
+
 	import com.fastframework.net.ILoader;
-	import com.fastframework.net.LoaderLoader;
 
 	import flash.display.LoaderInfo;
 	import flash.display.Sprite;

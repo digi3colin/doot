@@ -1,14 +1,16 @@
 ﻿package doot.model {
-	import com.fastframework.core.FASTLog;
-	import flash.events.ProgressEvent;
+	import doot.ResolveLink;
+	import doot.net.LoaderEvent;
+	import doot.net.LoaderFactory;
+
 	import com.fastframework.core.FASTEventDispatcher;
 	import com.fastframework.core.SingletonError;
+	import com.fastframework.log.FASTLog;
 	import com.fastframework.net.ILoader;
-	import com.fastframework.net.LoaderEvent;
-	import com.fastframework.net.LoaderFactory;
-	import doot.ResolveLink;
+
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.ProgressEvent;
 	import flash.text.Font;
 	import flash.utils.Dictionary;
 

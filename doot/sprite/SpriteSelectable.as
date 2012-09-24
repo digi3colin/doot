@@ -1,10 +1,9 @@
 ﻿package doot.sprite {
 	import doot.model.UserInput;
 
-	import com.fastframework.core.EventDispatcherUtils;
+	import com.fastframework.core.FASTSpriteEventDispatcher;
 	import com.fastframework.core.IFASTEventDispatcher;
 
-	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
@@ -13,7 +12,7 @@
 	/**
 	 * @author Digi3Studio - Colin Leung
 	 */
-	public class SpriteSelectable extends Sprite implements IFASTEventDispatcher, ITransformBehaviour {
+	public class SpriteSelectable extends FASTSpriteEventDispatcher implements IFASTEventDispatcher, ITransformBehaviour {
 		public static const EVENT_CHANGE : String = Event.CHANGE;
 		private var imp:ITransformBehaviour;
 
@@ -23,16 +22,6 @@
 			imp = (x==0)?new SpriteDrawTransform(this):new SpriteTransform(this);
 
 			this.when(MouseEvent.MOUSE_OVER, over);
-		}
-
-		public function when(eventType : String, callback : Function) : * {
-			this.addEventListener(eventType, callback, false,0,true);
-			return this;
-		}
-
-		public function once(eventType : String, callback : Function) : * {
-			EventDispatcherUtils.instance().once(this, eventType, callback);
-			return this;
 		}
 
 		private function over(e:MouseEvent):void{

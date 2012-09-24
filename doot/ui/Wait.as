@@ -1,8 +1,9 @@
 ﻿package doot.ui {
+	import com.fastframework.core.SingletonError;
 	import doot.IView;
 	import doot.view.AbstractView;
 
-	import com.fastframework.core.FASTLog;
+	import com.fastframework.log.FASTLog;
 
 	import flash.display.Sprite;
 	import flash.text.AntiAliasType;
@@ -23,7 +24,7 @@
 		private var showCount:int=0;
 
 		public function Wait() {
-			if(ins!=null)return;
+			if(ins!=null)throw new SingletonError(this);
 			ins = this;
 			base = new AbstractView();
 		}

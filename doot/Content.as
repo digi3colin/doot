@@ -1,13 +1,14 @@
 ﻿package doot {
+	import doot.motion.MotionEvent;
+	import doot.motion.MotionTween;
+	import doot.net.LoaderEvent;
+	import doot.net.LoaderFactory;
+
 	import com.fastframework.core.FASTEventDispatcher;
 	import com.fastframework.core.IFASTEventDispatcher;
-	import com.fastframework.motion.MotionTween;
-	import com.fastframework.motion.MotionTweenEvent;
 	import com.fastframework.navigation.Navigation;
 	import com.fastframework.navigation.NavigationEvent;
 	import com.fastframework.net.ILoader;
-	import com.fastframework.net.LoaderEvent;
-	import com.fastframework.net.LoaderFactory;
 
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -45,7 +46,7 @@
 
 			fadein  = new MotionTween(movieContainer,{a:100});
 			fadeout = new MotionTween(movieContainer,{a:0});
-			fadeout.when(MotionTweenEvent.END, onFadeOutAndLoad);
+			fadeout.when(MotionEvent.EVENT_END, onFadeOutAndLoad);
 
 			Navigation.instance().when(NavigationEvent.CHANGE, onNavChange);
 		}
@@ -65,7 +66,7 @@
 			trace('onNavChange');
 		}
 
-		private function onFadeOutAndLoad(e:MotionTweenEvent):void {
+		private function onFadeOutAndLoad(e:Event):void {
 			loadAction();
 		}
 

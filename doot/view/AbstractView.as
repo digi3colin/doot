@@ -1,7 +1,6 @@
 ﻿package doot.view {
 	import doot.IView;
-
-	import com.fastframework.motion.MotionTween;
+	import doot.motion.MotionTween;
 
 	import flash.display.Sprite;
 	import flash.utils.describeType;
