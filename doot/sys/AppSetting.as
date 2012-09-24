@@ -1,11 +1,16 @@
 ﻿package doot.sys {
+	import doot.I18n;
+	import doot.ResolveLink;
+
+	import i18n.SERVER;
+
 	import com.fastframework.core.FASTEventDispatcher;
 	import com.fastframework.core.FASTLog;
 	import com.fastframework.core.IFASTEventDispatcher;
 	import com.fastframework.core.SingletonError;
 	import com.fastframework.net.ILoader;
 	import com.fastframework.net.LoaderFactory;
-	import doot.ResolveLink;
+
 	import flash.events.Event;
 
 
@@ -42,8 +47,7 @@
 
 				ldrSession = LoaderFactory.instance().getXMLLoader();
 				ldrSession.when(Event.COMPLETE,session2);
-				ldrSession.load(ResolveLink.instance().create('users/getSessionId.xml',true));
-
+				ldrSession.load(ResolveLink.instance().create(I18n.t(SERVER.URL_SESSION),true));//'users/getSessionId.xml'
 			}
 			_session = str;
 		}

@@ -1,13 +1,13 @@
 ﻿package doot.sprite.edit {
-
 	import doot.IEditTool;
-	import doot.sprite.edit.editBehaviour.EditMove;
+	import doot.sprite.edit.editBehaviour.EditRemoveableMove;
 	import doot.sprite.edit.editBehaviour.EditRotate;
 	import doot.sprite.edit.editBehaviour.EditScale;
 
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 
 
 	/**
@@ -22,7 +22,7 @@
 		private var btnScale : ControllerEditButton;
 		private var editor : Editor;
 
-		public function ControllerEditTool(mc:Sprite,editor:Editor, editTool:IEditTool) {
+		public function ControllerEditTool(mc:Sprite,editor:Editor, editTool:IEditTool,bound:Rectangle) {
 			this.editor = editor;
 			this.editor.when(Editor.EVENT_HIDE_ALL_TOOL, 	hide);
 			this.editor.when(Editor.EVENT_SHOW_BASIC_TOOL, 	showMoveTool);
@@ -36,7 +36,7 @@
 
 			//add new edit features.
 			btnRotate 	= new ControllerEditButton(view.getBtnRotate(),new EditRotate(),editor);
-			btnMove 	= new ControllerEditButton(view.getBtnMove(),  new EditMove()  ,editor);
+			btnMove 	= new ControllerEditButton(view.getBtnMove(),  new EditRemoveableMove(bound)  ,editor);
 			btnScale 	= new ControllerEditButton(view.getBtnScale(), new EditScale() ,editor);
 			
 			doHide();

@@ -3,6 +3,7 @@
 	import doot.ResolveLink;
 	import doot.model.encoder.PNGEncoder;
 	import doot.ui.Prompt;
+	import i18n.SERVER;
 	import com.fastframework.core.FASTLog;
 	import com.fastframework.core.ILog;
 	import com.fastframework.net.ILoader;
@@ -81,7 +82,7 @@
 			mcBtn.visible = false;
 
 			var data:ByteArray = PNGEncoder.encode(screencap);
-			ldSaveScreenCaptureImage.sendBinaryAndLoad(ResolveLink.instance().create('bugs/saveScreenshot'), data);		
+			ldSaveScreenCaptureImage.sendBinaryAndLoad(ResolveLink.instance().create(I18n.t(SERVER.URL_BUG)+'/saveScreenshot'), data);		
 		}
 		
 		private function onScreenCaptureUpload(...e):void{
@@ -93,7 +94,7 @@
 			urlVariables['screenshot']	= xResult['file'];
 
 			ldSaveMessage.sendAndLoad(
-				ResolveLink.instance().create('bugs/submit'),
+				ResolveLink.instance().create(I18n.t(SERVER.URL_BUG)+'/submit'),
 				urlVariables,
 				URLRequestMethod.POST
 			);

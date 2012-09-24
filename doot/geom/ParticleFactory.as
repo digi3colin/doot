@@ -18,7 +18,7 @@
 			particles = new Vector.<Particle>(count);
 			for(var i:int=0;i<count;i++){
 				particles[i] = new Particle(0, 0, 0, 0, 0, 30);
-				particles[i].g = 0.1;
+				particles[i].g = 0.05;
 			}
 		}
 		
@@ -31,7 +31,7 @@
 			res.z = z;
 			res.vx=res.vy=res.vz=0;
 			res.color = Math.floor(Math.random()*3);
-			res.airResistance=5;
+			res.airResistance=4;
 
 			return res;
 		}
