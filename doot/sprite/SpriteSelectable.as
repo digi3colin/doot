@@ -34,12 +34,6 @@
 			//ready to select this sprite;
 			SpriteSelected.instance().select(this);
 		}
-		private function over(e:MouseEvent):void{
-			//user doing something.. dont focus it.
-			if(UserInput.instance().isMouseDown==true)return;
-			//ready to select this sprite;
-			SpriteSelected.instance().select(this);
-		}
 
 		public function rotate(radian:Number):void{
 			imp.rotate(radian);

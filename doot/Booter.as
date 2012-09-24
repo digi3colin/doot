@@ -1,6 +1,7 @@
 ﻿package doot {
+	import doot.net.LoaderLoader;
+
 	import com.fastframework.net.ILoader;
-	import com.fastframework.net.LoaderLoader;
 
 	import flash.display.Sprite;
 

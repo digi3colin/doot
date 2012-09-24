@@ -1,8 +1,9 @@
 ﻿package doot.ui {
-	import com.fastframework.core.SingletonError;
 	import doot.IView;
 	import doot.view.ShowHideView;
 
+	import com.fastframework.core.FASTEventDispatcher;
+	import com.fastframework.core.SingletonError;
 	import com.fastframework.log.FASTLog;
 
 	import flash.display.Sprite;

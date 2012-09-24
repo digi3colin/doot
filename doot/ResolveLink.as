@@ -1,8 +1,7 @@
 ﻿package doot {
 	import doot.resolveLink.ResolveLinkLocal;
 	import doot.resolveLink.ResolveLinkRemote;
-
-	import com.fastframework.core.utils.SystemUtils;
+	import doot.utils.SystemUtils;
 
 	import flash.display.Sprite;
 	/**

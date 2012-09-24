@@ -2,13 +2,15 @@
 	import doot.IView;
 	import doot.motion.MotionTween;
 
+	import com.fastframework.core.FASTEventDispatcher;
+
 	import flash.display.Sprite;
 	import flash.utils.describeType;
 
 	/**
 	 * @author colin
 	 */
-	public class AbstractView implements IView{
+	public class AbstractView extends FASTEventDispatcher implements IView{
 		private var isHide:Boolean=false;
 		private var motion:MotionTween;
 		private var view:Sprite;

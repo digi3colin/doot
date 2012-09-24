@@ -1,8 +1,9 @@
 ﻿package doot {
+	import doot.net.LoaderEvent;
+	import doot.net.LoaderFactory;
+
 	import com.fastframework.core.FASTEventDispatcher;
 	import com.fastframework.net.ILoader;
-	import com.fastframework.net.LoaderEvent;
-	import com.fastframework.net.LoaderFactory;
 
 	import flash.display.Sprite;
 	import flash.events.Event;

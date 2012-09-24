@@ -1,10 +1,11 @@
 ﻿package doot {
 	import doot.multifont.UnicodeScriptsTable;
+	import doot.net.LoaderEvent;
+	import doot.net.LoaderFactory;
+	import doot.string.StringUtils;
+
 	import com.fastframework.core.FASTEventDispatcher;
-	import com.fastframework.core.utils.StringUtils;
 	import com.fastframework.net.ILoader;
-	import com.fastframework.net.LoaderEvent;
-	import com.fastframework.net.LoaderFactory;
 
 	import flash.display.BitmapData;
 	import flash.display.Sprite;

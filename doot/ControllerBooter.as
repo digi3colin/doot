@@ -1,6 +1,7 @@
 ﻿package doot {
+	import doot.net.LoaderEvent;
+
 	import com.fastframework.net.ILoader;
-	import com.fastframework.net.LoaderEvent;
 
 	import flash.display.Loader;
 	import flash.display.LoaderInfo;

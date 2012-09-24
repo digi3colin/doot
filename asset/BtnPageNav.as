@@ -1,8 +1,8 @@
 ﻿package asset {
-	import com.fastframework.core.utils.Conversion;
-	import com.fastframework.motion.MotionTween;
-	import com.fastframework.view.IButtonClip;
-	import com.fastframework.view.IButtonElement;
+	import doot.motion.MotionTween;
+	import doot.pixel.ColorConversion;
+	import doot.view.IButtonClip;
+	import doot.view.IButtonElement;
 
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -19,7 +19,7 @@
 
 		public function buttonOver(e : Event) : void {
 			mtIcon.startTween({
-				c:Conversion.hexToColor(0xFFFFFF, 1)
+				c:ColorConversion.hexToColor(0xFFFFFF, 1)
 			});
 		}
 
@@ -38,8 +38,8 @@
 		public function init(btn : IButtonClip) : void {
 			mtIcon.startTween({
 				c:btn.getSelect()?
-					Conversion.hexToColor(0, 1):
-					Conversion.hexToColor(-1, 1)
+					ColorConversion.hexToColor(0, 1):
+					ColorConversion.hexToColor(ColorConversion.ORGINAL_COLOR_NUMBER, 1)
 			});
 		}
 	}

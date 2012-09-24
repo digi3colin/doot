@@ -1,5 +1,5 @@
 ﻿package doot.model {
-	import com.fastframework.core.ILog;
+	import com.fastframework.log.ILog;
 
 	import flash.text.TextField;
 	/**

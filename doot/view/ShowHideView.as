@@ -1,11 +1,10 @@
 ﻿package doot.view {
 	import doot.IView;
+	import doot.motion.MotionEvent;
+	import doot.motion.MotionTween;
+	import doot.view.events.ButtonClipEvent;
 
 	import com.fastframework.core.FASTEventDispatcher;
-	import com.fastframework.motion.MotionTween;
-	import com.fastframework.motion.MotionTweenEvent;
-	import com.fastframework.view.ButtonClip;
-	import com.fastframework.view.events.ButtonClipEvent;
 
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -40,7 +39,7 @@
 		public function setView(mc : Sprite,autoHide:Boolean=true) : IView {
 			view = mc;
 			motion = new MotionTween(mc,{dur:motionDur});
-			motion.when(MotionTweenEvent.END, onMotionEnd);
+			motion.when(MotionEvent.EVENT_END, onMotionEnd);
 			if(autoHide){
 				motion.hideSprite();
 				isHide = true;
